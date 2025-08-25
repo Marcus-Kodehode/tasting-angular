@@ -1,23 +1,17 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- App Wrapper -->
+<div class="min-h-screen bg-gray-100 text-gray-800 flex flex-col items-center justify-start p-6">
 
-<h1>Hello {{ name }} 👋</h1>
-<app-todo></app-todo> <!-- matcher selector i todo.ts -->
+  <!-- Header -->
+  <header class="text-center mb-10">
+    <h1 class="text-4xl font-bold mb-2">Hei, {{ name }} 👋</h1>
+    <p class="text-sm text-gray-500">Velkommen til din Todo-liste. Hold styr på dagen din enkelt.</p>
+  </header>
 
+  <!-- Todo-komponenten -->
+  <app-todo></app-todo>
 
-
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-
+  <!-- Footer (valgfritt) -->
+  <footer class="mt-10 text-xs text-gray-400 text-center">
+    Bygget med ❤️ og Tailwind
+  </footer>
+</div>

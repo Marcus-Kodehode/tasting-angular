@@ -1,20 +1,90 @@
-<div class="p-4 max-w-md mx-auto space-y-3">
-  <h2 class="text-2xl font-bold">Min Todo-liste</h2>
+<div class="p-6 max-w-md mx-auto space-y-6 bg-white shadow-lg rounded-md">
+  <h2 class="text-2xl font-bold text-center">📝 Min Todo-liste</h2>
 
+  <!-- input + knapp -->
   <div class="flex gap-2">
-    <input [(ngModel)]="newTask" placeholder="Ny oppgave"
-           class="border rounded px-3 py-2 flex-1" />
-    <button (click)="addTask()"
-            class="px-3 py-2 rounded bg-black text-white">
-      Legg til
+    <input
+      [(ngModel)]="newTask"
+      (keyup.enter)="addTask()"
+      placeholder="Ny oppgave"
+      class="border border-gray-300 rounded px-3 py-2 flex-1 outline-none focus:ring-2 focus:ring-blue-400"
+    />
+    <button
+      (click)="addTask()"
+      [disabled]="!newTask.trim()"
+      class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-40"
+    >
+      ➕ Legg til
     </button>
   </div>
 
-  <ul class="space-y-1">
-    <li *ngFor="let task of tasks; let i = index"
-        class="flex items-center justify-between border rounded px-3 py-2">
-      <span>{{ task }}</span>
-      <button (click)="removeTask(i)" class="text-sm">❌</button>
-    </li>
-  </ul>
+  <!-- filtre + status -->
+  <div class="flex items-center justify-between text-sm">
+    <div class="space-x-2">
+      <button
+        (click)="setFilter('all')"
+        class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
+        [class.bg-black]="filter==='all'"
+        [class.text-white]="filter==='all'"
+      >
+        Alle
+      </button>
+      <button
+        (click)="setFilter('active')"
+        class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
+        [class.bg-black]="filter==='active'"
+        [class.text-white]="filter==='active'"
+      >
+        Aktive
+      </button>
+      <button
+        (click)="setFilter('done')"
+        class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
+        [class.bg-black]="filter==='done'"
+        [class.text-white]="filter==='done'"
+      >
+        Ferdige
+      </button>
+    </div>
+    <div class="text-gray-500">{{ remaining }} igjen</div>
+  </div>
+
+  <!-- lista / tom-tilstand -->
+  <ng-container *ngIf="visible.length; else empty">
+    <ul class="space-y-2">
+      <li
+        *ngFor="let task of visible; trackBy: trackById"
+        class="flex items-center justify-between border border-gray-200 rounded px-3 py-2 bg-gray-50 hover:bg-gray-100"
+      >
+        <label class="flex items-center gap-3">
+          <input
+            type="checkbox"
+            class="accent-blue-500 w-4 h-4"
+            [checked]="task.done"
+            (change)="toggle(task)"
+          />
+          <span
+            [class.line-through]="task.done"
+            [class.text-gray-400]="task.done"
+            class="text-sm"
+          >
+            {{ task.text }}
+          </span>
+        </label>
+        <button (click)="remove(task)" class="text-sm text-red-500 hover:text-red-700">❌</button>
+      </li>
+    </ul>
+  </ng-container>
+
+  <!-- tom-tilstand -->
+  <ng-template #empty>
+    <p class="text-sm text-center text-gray-400">Ingen oppgaver i denne visningen.</p>
+  </ng-template>
+
+  <!-- fjern ferdige -->
+  <div *ngIf="anyDone" class="text-right">
+    <button (click)="clearCompleted()" class="text-xs text-blue-600 hover:underline">
+      🧹 Fjern ferdige
+    </button>
+  </div>
 </div>
