@@ -1,17 +1,33 @@
-<!-- App Wrapper -->
 <div class="min-h-screen bg-gray-100 text-gray-800 flex flex-col items-center justify-start p-6">
+  <ng-container *ngIf="!name; else content">
+    <!-- Navne-input -->
+    <div class="bg-white p-6 rounded shadow-md max-w-md w-full space-y-4 text-center">
+      <h1 class="text-2xl font-bold">Hva heter du? 👋</h1>
+      <input
+        [(ngModel)]="tempName"
+        placeholder="Skriv inn navnet ditt"
+        class="border rounded px-4 py-2 w-full text-center"
+      />
+      <button
+        (click)="saveName()"
+        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-full"
+      >
+        Fortsett
+      </button>
+    </div>
+  </ng-container>
 
-  <!-- Header -->
-  <header class="text-center mb-10">
-    <h1 class="text-4xl font-bold mb-2">Hei, {{ name }} 👋</h1>
-    <p class="text-sm text-gray-500">Velkommen til din Todo-liste. Hold styr på dagen din enkelt.</p>
-  </header>
+  <!-- Main innhold -->
+  <ng-template #content>
+    <header class="text-center mb-10">
+      <h1 class="text-4xl font-bold mb-2">Hei, {{ name }} 👋</h1>
+      <p class="text-sm text-gray-500">Velkommen til din Todo-liste. Hold styr på dagen din enkelt.</p>
+    </header>
 
-  <!-- Todo-komponenten -->
-  <app-todo></app-todo>
+    <app-todo></app-todo>
 
-  <!-- Footer (valgfritt) -->
-  <footer class="mt-10 text-xs text-gray-400 text-center">
-    Bygget med ❤️ og Tailwind
-  </footer>
+    <footer class="mt-10 text-xs text-gray-400 text-center">
+      Bygget med ❤️ og Tailwind
+    </footer>
+  </ng-template>
 </div>
