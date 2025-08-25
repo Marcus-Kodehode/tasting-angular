@@ -17,6 +17,7 @@ export class Todo {
   newDueDate = '';
   newDueTime = '';
   newCategory = '';
+  customCategory = '';
 
   categories = ['Jobb', 'Hjem', 'Skole', 'Trening', 'Helse'];
 
@@ -32,8 +33,7 @@ export class Todo {
     const t = this.newTask.trim();
     if (!t) return;
 
-    const category =
-      this.newCategory === 'custom' ? this.newCategory.trim() : this.newCategory;
+    const category = this.newCategory === 'custom' ? this.customCategory.trim() : this.newCategory;
 
     this.tasks.unshift({
       id: Date.now(),
@@ -49,6 +49,7 @@ export class Todo {
     this.newDueTime = '';
     this.newCategory = '';
     this.persist();
+    this.customCategory = '';
   }
 
   toggle(task: Task): void {
@@ -113,11 +114,11 @@ export class Todo {
   }
 
   get activeTasks(): Task[] {
-    return this.tasks.filter(t => !t.done);
+    return this.tasks.filter((t) => !t.done);
   }
 
   get completedTasks(): Task[] {
-    return this.tasks.filter(t => t.done);
+    return this.tasks.filter((t) => t.done);
   }
 
   trackById(index: number, t: Task): number {
