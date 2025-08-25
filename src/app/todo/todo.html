@@ -1,39 +1,54 @@
+<!-- Fil: src/app/todo/todo.html -->
 <div class="card animate-fade-in">
   <h2 class="text-2xl font-bold text-green-300 mb-4">📝 Min Todo-liste</h2>
 
-  <form (submit)="addTask()" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+  <!-- Input-skjema -->
+  <form (submit)="addTask()" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+    <!-- Oppgavetekst -->
     <input
       [(ngModel)]="newTask"
       name="task"
       required
       placeholder="Hva skal gjøres?"
-      class="input col-span-2"
+      class="input w-full col-span-1 sm:col-span-2"
     />
-    <input [(ngModel)]="newDueDate" name="dueDate" type="date" class="input" />
-    <input [(ngModel)]="newDueTime" name="dueTime" type="time" class="input" />
-    <select
-      [(ngModel)]="newCategory"
-      name="category"
-      class="bg-slate-800 text-white border border-slate-500 rounded px-3 py-2 appearance-none"
-    >
-      <option class="bg-slate-800 text-white" value="" disabled selected>Velg kategori</option>
-      <option *ngFor="let c of categories" [value]="c" class="bg-slate-800 text-white">
+
+    <!-- Dato -->
+    <input [(ngModel)]="newDueDate" name="dueDate" type="date" class="input w-full" />
+
+    <!-- Tid -->
+    <input [(ngModel)]="newDueTime" name="dueTime" type="time" class="input w-full" />
+
+    <!-- Kategori -->
+    <select [(ngModel)]="newCategory" name="category" class="input w-full bg-slate-800 text-white">
+      <option value="" disabled selected class="text-white bg-slate-800">Velg kategori</option>
+      <option *ngFor="let c of categories" [value]="c" class="text-white bg-slate-800">
         {{ c }}
       </option>
-      <option value="custom" class="bg-slate-800 text-white">Egendefinert...</option>
+      <option value="custom" class="text-white bg-slate-800">Egendefinert...</option>
     </select>
 
+    <!-- Custom kategori -->
     <input
       *ngIf="newCategory === 'custom'"
       [(ngModel)]="customCategory"
       name="customCategory"
-      placeholder="Egendefinert kategori"
-      class="input col-span-5 mt-2"
+      placeholder="Egen kategori"
+      class="input w-full bg-gray-800 text-white border border-gray-600 placeholder-gray-400 focus:ring-2 focus:ring-green-400 appearance-none"
     />
-    <button type="submit" class="btn btn-primary col-span-5 mt-2">➕ Legg til</button>
+
+    <!-- Legg til knapp -->
+    <button
+      type="submit"
+      class="btn btn-primary w-full col-span-1 sm:col-span-2 lg:col-span-5 mt-2"
+    >
+      ➕ Legg til
+    </button>
   </form>
 
+  <!-- Oppgavelister -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+    <!-- Aktive oppgaver -->
     <div>
       <h3 class="text-lg font-semibold text-green-300 uppercase mb-2">Aktive</h3>
       <ul class="space-y-2">
@@ -62,6 +77,7 @@
       </ul>
     </div>
 
+    <!-- Ferdige oppgaver -->
     <div>
       <h3 class="text-lg font-semibold text-green-300 uppercase mb-2">Ferdige</h3>
       <ul class="space-y-2">
