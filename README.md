@@ -52,8 +52,6 @@ Både studenter, arbeidstakere, utviklere og andre produktive sjeler vil kunne b
 - **Angular (standalone components)** – Rammeverket hele appen er bygget med
 - **Tailwind CSS** – For moderne og responsiv styling
 - **LocalStorage** – Enkel lagring av oppgaver uten backend
-- **Figma** – For skisser og UI-planlegging  
-  🔗 *(Designlenke legges inn ved behov)*
 
 ---
 
@@ -88,7 +86,7 @@ marcus-todo/
 
 ## 💡 Planlagte og mulige utvidelser
 
-- 🧲 Drag & drop for rekkefølge
+- 🧲 Drag & drop
 - 📆 Visning gruppert etter dato
 - 🔔 Påminnelser (lokalt)
 - 🧹 Massehandling (fullfør, slett flere)
