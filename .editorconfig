@@ -15,3 +15,42 @@ ij_typescript_use_double_quotes = false
 [*.md]
 max_line_length = off
 trim_trailing_whitespace = false
+
+# ------------------------------------------------------------
+# SAMMENDRAG – Hva denne .editorconfig gjør
+# ------------------------------------------------------------
+# root = true
+#   Marker denne fila som rot for EditorConfig. Regler i undermapper
+#   arver IKKE videre oppover.
+#
+# [*] (gjelder alle filer)
+#   charset = utf-8
+#     Sikrer at filer lagres i UTF-8 (norske tegn/emoji funker).
+#   indent_style = space
+#     Innrykk bruker mellomrom (ikke tabs).
+#   indent_size = 2
+#     To mellomrom per innrykk (standard i mange JS/TS-prosjekter).
+#   insert_final_newline = true
+#     Legg til linjeskift på slutten av fila (POSIX-vennlig; diff blir ryddigere).
+#   trim_trailing_whitespace = true
+#     Fjerner mellomrom på slutten av linjer (hindrer “støy” i commits).
+#
+# [*.ts] (gjelder TypeScript-filer)
+#   quote_type = single
+#     Ikke-standard EditorConfig-nøkkel, men støttes av noen verktøy/utvidelser:
+#     foretrekker enkeltfnutter ('...') i TS.
+#   ij_typescript_use_double_quotes = false
+#     JetBrains-spesifikk innstilling (WebStorm/IntelliJ):
+#     false = bruk enkeltfnutter, ikke dobbeltfnutter.
+#
+# [*.md] (gjelder Markdown)
+#   max_line_length = off
+#     Skru av automatisk linjebryting; la Markdown styre flyten.
+#   trim_trailing_whitespace = false
+#     Behold trailing spaces (to mellomrom i slutten av en linje = hard line break i Markdown).
+#
+# Praktisk:
+# - VS Code/JetBrains leser dette automatisk (eller via EditorConfig-plugin).
+# - Mer spesifikke seksjoner (f.eks. [*.ts]) overstyrer [*].
+# - Konsistent format gjør diffs renere og samarbeidet enklere.
+# ------------------------------------------------------------
