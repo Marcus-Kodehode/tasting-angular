@@ -2,13 +2,13 @@
   <h2 class="text-2xl font-bold text-center">📝 Min Todo-liste</h2>
 
   <!-- Input-skjema -->
-  <form (submit)="addTask()" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+  <form (submit)="addTask()" class="grid grid-cols-1 md:grid-cols-5 gap-4">
     <input
       [(ngModel)]="newTask"
       name="task"
       required
       placeholder="Hva skal gjøres?"
-      class="border rounded px-3 py-2 col-span-1 md:col-span-2"
+      class="border rounded px-3 py-2 col-span-2"
     />
     <input
       [(ngModel)]="newDueDate"
@@ -22,19 +22,31 @@
       type="time"
       class="border rounded px-3 py-2"
     />
-    <input
+    <select
       [(ngModel)]="newCategory"
       name="category"
-      placeholder="Kategori"
       class="border rounded px-3 py-2"
-    />
-    <button
-      type="submit"
-      class="md:col-span-4 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
     >
-      ➕ Legg til
-    </button>
+      <option value="" disabled selected>Velg kategori</option>
+      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+      <option value="custom">Egendefinert...</option>
+    </select>
   </form>
+
+  <input
+    *ngIf="newCategory === 'custom'"
+    [(ngModel)]="newCategory"
+    placeholder="Egendefinert kategori"
+    class="border rounded px-3 py-2"
+    name="customCategory"
+  />
+
+  <button
+    (click)="addTask()"
+    class="w-full px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
+  >
+    ➕ Legg til
+  </button>
 
   <!-- Massehandlinger -->
   <div *ngIf="selectMode" class="flex items-center justify-between text-sm border-t pt-4">
@@ -63,24 +75,31 @@
     <div>
       <h3 class="text-lg font-semibold mb-2">📌 Aktive</h3>
       <ul class="space-y-2">
-        <li *ngFor="let task of activeTasks; trackBy: trackById" class="flex items-center justify-between border rounded px-3 py-2 bg-gray-50 hover:bg-gray-100">
-          <label class="flex items-center gap-3">
-            <input
-              *ngIf="selectMode"
-              type="checkbox"
-              [(ngModel)]="task.selected"
-              class="w-4 h-4 accent-black"
-            />
-            <input
-              *ngIf="!selectMode"
-              type="checkbox"
-              [checked]="task.done"
-              (change)="toggle(task)"
-              class="w-4 h-4 accent-black"
-            />
-            <span class="text-sm">{{ task.text }}</span>
-          </label>
-          <button (click)="remove(task)" class="text-sm text-red-500 hover:text-red-700">❌</button>
+        <li *ngFor="let task of activeTasks; trackBy: trackById" class="flex flex-col border rounded px-3 py-2 bg-gray-50 hover:bg-gray-100">
+          <div class="flex items-center justify-between">
+            <label class="flex items-center gap-3">
+              <input
+                *ngIf="selectMode"
+                type="checkbox"
+                [(ngModel)]="task.selected"
+                class="w-4 h-4 accent-black"
+              />
+              <input
+                *ngIf="!selectMode"
+                type="checkbox"
+                [checked]="task.done"
+                (change)="toggle(task)"
+                class="w-4 h-4 accent-black"
+              />
+              <span class="text-sm">{{ task.text }}</span>
+            </label>
+            <button (click)="remove(task)" class="text-sm text-red-500 hover:text-red-700">❌</button>
+          </div>
+          <div class="text-xs text-gray-500 mt-1 space-x-2 ml-7">
+            <span *ngIf="task.dueDate">📅 {{ task.dueDate }}</span>
+            <span *ngIf="task.dueTime">⏰ {{ task.dueTime }}</span>
+            <span *ngIf="task.category">🗂️ {{ task.category }}</span>
+          </div>
         </li>
       </ul>
     </div>
@@ -89,17 +108,24 @@
     <div>
       <h3 class="text-lg font-semibold mb-2">✅ Ferdige</h3>
       <ul class="space-y-2">
-        <li *ngFor="let task of completedTasks; trackBy: trackById" class="flex items-center justify-between border rounded px-3 py-2 bg-gray-100">
-          <label class="flex items-center gap-3">
-            <input
-              type="checkbox"
-              [checked]="task.done"
-              (change)="toggle(task)"
-              class="w-4 h-4 accent-black"
-            />
-            <span class="text-sm line-through text-gray-500">{{ task.text }}</span>
-          </label>
-          <button (click)="remove(task)" class="text-sm text-red-500 hover:text-red-700">❌</button>
+        <li *ngFor="let task of completedTasks; trackBy: trackById" class="flex flex-col border rounded px-3 py-2 bg-gray-100">
+          <div class="flex items-center justify-between">
+            <label class="flex items-center gap-3">
+              <input
+                type="checkbox"
+                [checked]="task.done"
+                (change)="toggle(task)"
+                class="w-4 h-4 accent-black"
+              />
+              <span class="text-sm line-through text-gray-500">{{ task.text }}</span>
+            </label>
+            <button (click)="remove(task)" class="text-sm text-red-500 hover:text-red-700">❌</button>
+          </div>
+          <div class="text-xs text-gray-500 mt-1 space-x-2 ml-7">
+            <span *ngIf="task.dueDate">📅 {{ task.dueDate }}</span>
+            <span *ngIf="task.dueTime">⏰ {{ task.dueTime }}</span>
+            <span *ngIf="task.category">🗂️ {{ task.category }}</span>
+          </div>
         </li>
       </ul>
       <div *ngIf="anyDone" class="mt-2 text-right">

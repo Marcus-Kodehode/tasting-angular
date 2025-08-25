@@ -18,6 +18,8 @@ export class Todo {
   newDueTime = '';
   newCategory = '';
 
+  categories = ['Jobb', 'Hjem', 'Skole', 'Trening', 'Helse'];
+
   tasks: Task[] = [];
   filter: Filter = 'all';
   selectMode = false;
@@ -30,13 +32,16 @@ export class Todo {
     const t = this.newTask.trim();
     if (!t) return;
 
+    const category =
+      this.newCategory === 'custom' ? this.newCategory.trim() : this.newCategory;
+
     this.tasks.unshift({
       id: Date.now(),
       text: t,
       done: false,
       dueDate: this.newDueDate,
       dueTime: this.newDueTime,
-      category: this.newCategory,
+      category,
     });
 
     this.newTask = '';
