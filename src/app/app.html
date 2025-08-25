@@ -1,25 +1,100 @@
+<!-- Fil: src/app/app.html -->
 <body class="relative min-h-screen bg-slate-900 overflow-hidden">
-
-  <!-- Bakgrunnsglow -->
+  <!--
+    Bakgrunnsgrafikk / "glow"-lag
+    ----------------------------------------------------
+    - absolute + blur + gradient for pene lys-effekter bak innholdet.
+    - -inset-10 utvider elementet utenfor viewport for myk feathering.
+    - opacity justerer intensitet.
+    - Disse ligger FØR innholdet i DOM, men bak via stacking (se z-10 på container).
+  -->
   <div class="absolute -inset-10 bg-gradient-to-tr from-cyan-500 via-teal-500 to-blue-500 blur-3xl opacity-40"></div>
   <div class="absolute inset-y-1/4 left-0 w-80 h-80 bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 blur-2xl opacity-30"></div>
 
+  <!--
+    Hovedcontainer for innholdet
+    ----------------------------------------------------
+    - relative z-10: legges over bakgrunnsglow.
+    - font-sans: bruker font fra Tailwind (@theme i styles.css, hvis du satt den).
+    - p-6: luft rundt.
+  -->
   <div class="relative z-10 flex flex-col items-center justify-start p-6 font-sans">
+
+    <!--
+      «Gatekeeper»: Hvis vi IKKE har name (falsy), vis navneskjerm.
+      *ngIf på <ng-container> rendrer ikke ekstra wrapper-element i DOM.
+      else content -> peker til <ng-template #content> nedenfor.
+      For at dette skal kompilere må App-komponenten ha en public property `name`
+      (f.eks. string | null).
+    -->
     <ng-container *ngIf="!name; else content">
+
+      <!--
+        Kort med felt for midlertidig navn:
+        - [(ngModel)]="tempName": toveis-binding (krever FormsModule importert i App-komponenten).
+        - saveName(): metode i App.ts som bør sette this.name = this.tempName.trim()
+          (og gjerne lagre i localStorage hvis du vil huske navnet over reload).
+      -->
       <div class="card max-w-md w-full animate-fade-in">
         <h1 class="text-2xl font-bold text-green-300">Hva heter du?</h1>
-        <input [(ngModel)]="tempName" placeholder="Fyll inn navnet ditt" class="input w-full my-4" />
+
+        <input
+          [(ngModel)]="tempName"
+          placeholder="Fyll inn navnet ditt"
+          class="input w-full my-4"
+        />
+
         <button (click)="saveName()" class="btn btn-primary w-full">Fortsett</button>
       </div>
     </ng-container>
 
+    <!--
+      Alternativt innhold når name finnes.
+      <ng-template> rendres først når *ngIf peker hit (else content).
+    -->
     <ng-template #content>
+      <!-- Topptekst / greeting -->
       <header class="text-center mb-10 animate-fade-in">
         <h1 class="text-4xl font-bold text-green-300">Hei, {{ name }} 👋</h1>
         <p class="text-white/70 mt-2">Din personlige Todo-liste i stjernestøvet</p>
       </header>
+
+      <!--
+        Selve todo-komponenten:
+        - For at dette skal virke må App-komponenten importere Todo i sine `imports: []`
+          (standalone-komponent).
+      -->
       <app-todo></app-todo>
+
+      <!-- Bunntekst -->
       <footer class="mt-10 text-xs text-white/40">Bygget med ❤️ og Tailwind</footer>
     </ng-template>
   </div>
 </body>
+
+<!--
+SAMMENDRAG – hva denne templaten gjør
+----------------------------------------------------
+• Viser en navneskjerm når `name` er falsy:
+    - Input bundet til `tempName` (ngModel) + knapp som kaller `saveName()`.
+    - Krever at App-komponenten importerer FormsModule (ellers kompileringsfeil på ngModel).
+
+• Når `name` finnes:
+    - Viser hilsen med {{ name }}, todo-komponenten (<app-todo>) og en enkel footer.
+    - Krever at App-komponenten importerer Todo i @Component({ imports: [Todo, FormsModule] }).
+
+• Visuell bakgrunn:
+    - To absolutte <div>-lag med gradient/blur for «glow».
+    - Selve innholdet ligger i en z-10-container (over glow).
+
+• Anbefaling (struktur):
+    - Flytt body-klasser til src/index.html sin <body> ELLER erstatt <body> her med en <div>.
+    - Eksempel (hvis du bytter til <div>): <div class="relative min-h-screen bg-slate-900 overflow-hidden"> … </div>
+
+• Kodekrevs i App.ts (minimum):
+    - public name: string | null = null;
+    - public tempName = '';
+    - saveName() { const v = this.tempName.trim(); if (v) { this.name = v; /* ev. localStorage.setItem('name', v) */ } }
+    - @Component({ imports: [FormsModule, Todo], ... })
+----------------------------------------------------
+-->
