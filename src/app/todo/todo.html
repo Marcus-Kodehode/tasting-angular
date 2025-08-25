@@ -1,0 +1,20 @@
+<div class="p-4 max-w-md mx-auto space-y-3">
+  <h2 class="text-2xl font-bold">Min Todo-liste</h2>
+
+  <div class="flex gap-2">
+    <input [(ngModel)]="newTask" placeholder="Ny oppgave"
+           class="border rounded px-3 py-2 flex-1" />
+    <button (click)="addTask()"
+            class="px-3 py-2 rounded bg-black text-white">
+      Legg til
+    </button>
+  </div>
+
+  <ul class="space-y-1">
+    <li *ngFor="let task of tasks; let i = index"
+        class="flex items-center justify-between border rounded px-3 py-2">
+      <span>{{ task }}</span>
+      <button (click)="removeTask(i)" class="text-sm">❌</button>
+    </li>
+  </ul>
+</div>

@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Todo } from './todo/todo';  // <- IKKE .component, og navnet er 'Todo'
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule],
+  imports: [Todo], // <- bruk komponenten her
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
-  title = 'tasting-angular';
-  name = 'Marcus'; // ← legg til denne
+  name = 'Marcus';
 }
