@@ -1,13 +1,70 @@
 <!doctype html>
+<!--
+  Dokumenttype for moderne HTML5. Viktig for at nettleseren bruker riktig parsing/standard-modus.
+-->
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <!--
+    Tegnsett UTF-8: støtter nordiske tegn og emoji. Skal stå helt øverst i <head>.
+  -->
+
   <title>TastingAngular</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!--
+    Dokumenttittel: vises i nettleserfanen og brukes av søkemotorer.
+    Du kan oppdatere denne dynamisk fra Angular via Title-service hvis ønskelig.
+  -->
+
+  <base href="/" />
+  <!--
+    VELDIG VIKTIG FOR ROUTING:
+    - Forteller nettleseren (og Angular Router) hva som er "rot"-sti for relative lenker.
+    - Ved produksjon under et sub-path (f.eks. https://domene.no/app/), MÅ denne endres til <base href="/app/">
+      ellers feiler route-oppslag / asset-importer ved reload/direkte navigasjon.
+  -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--
+    Responsiv visning på mobil: setter layout-viewport = enhetens bredde og riktig init-zoom.
+  -->
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <!--
+    Favicon i roten av "assets". Angular CLI kopierer dette automatisk til dist.
+    Du kan bytte til SVG eller PNG:
+      <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  -->
+
+  <!--
+    (Valgfritt, nyttige head-ting du kan legge til senere)
+    - Tema-farge på mobil-UI:
+        <meta name="theme-color" content="#0f172a" />
+    - Foretrukket fargeskjema:
+        <meta name="color-scheme" content="dark light" />
+    - PWA manifest:
+        <link rel="manifest" href="manifest.webmanifest" />
+    - Preconnect til fonter/CDN:
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  -->
 </head>
 <body>
+  <!--
+    Angulars rot-komponent.
+    - I src/main.ts kalles bootstrapApplication(App, appConfig).
+    - Angular finner <app-root></app-root> og renderer App-templaten din inni her.
+    - Alt innhold du ser i appen kommer fra App-komponenten og dens barn.
+  -->
   <app-root></app-root>
+
+  <!--
+    (Tips fra tidligere): Hvis du vil ha globale Tailwind-klasser på body/html
+    (f.eks. bg-slate-900, min-h-screen), legg dem her i denne <body>.
+    Unngå <body> inne i komponent-templates; hold den her i index.html.
+  -->
+
+  <!--
+    (Valgfritt, for brukere uten JS):
+    <noscript>Du må aktivere JavaScript for å kjøre denne appen.</noscript>
+  -->
 </body>
 </html>
