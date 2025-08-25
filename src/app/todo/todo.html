@@ -2,15 +2,34 @@
   <h2 class="text-2xl font-bold text-green-300 mb-4">📝 Min Todo-liste</h2>
 
   <form (submit)="addTask()" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
-    <input [(ngModel)]="newTask" name="task" required placeholder="Hva skal gjøres?" class="input col-span-2" />
+    <input
+      [(ngModel)]="newTask"
+      name="task"
+      required
+      placeholder="Hva skal gjøres?"
+      class="input col-span-2"
+    />
     <input [(ngModel)]="newDueDate" name="dueDate" type="date" class="input" />
     <input [(ngModel)]="newDueTime" name="dueTime" type="time" class="input" />
-    <select [(ngModel)]="newCategory" name="category" class="input">
-      <option value="" disabled selected>Velg kategori</option>
-      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
-      <option value="custom">Egendefinert...</option>
+    <select
+      [(ngModel)]="newCategory"
+      name="category"
+      class="bg-slate-800 text-white border border-slate-500 rounded px-3 py-2 appearance-none"
+    >
+      <option class="bg-slate-800 text-white" value="" disabled selected>Velg kategori</option>
+      <option *ngFor="let c of categories" [value]="c" class="bg-slate-800 text-white">
+        {{ c }}
+      </option>
+      <option value="custom" class="bg-slate-800 text-white">Egendefinert...</option>
     </select>
-    <input *ngIf="newCategory === 'custom'" [(ngModel)]="customCategory" name="customCategory" placeholder="Egendefinert kategori" class="input col-span-5 mt-2" />
+
+    <input
+      *ngIf="newCategory === 'custom'"
+      [(ngModel)]="customCategory"
+      name="customCategory"
+      placeholder="Egendefinert kategori"
+      class="input col-span-5 mt-2"
+    />
     <button type="submit" class="btn btn-primary col-span-5 mt-2">➕ Legg til</button>
   </form>
 
@@ -18,10 +37,18 @@
     <div>
       <h3 class="text-lg font-semibold text-green-300 uppercase mb-2">Aktive</h3>
       <ul class="space-y-2">
-        <li *ngFor="let task of activeTasks; trackBy: trackById" class="flex flex-col bg-slate-700 p-3 rounded-lg">
+        <li
+          *ngFor="let task of activeTasks; trackBy: trackById"
+          class="flex flex-col bg-slate-700 p-3 rounded-lg"
+        >
           <div class="flex items-center justify-between">
             <label class="flex items-center gap-3">
-              <input type="checkbox" [checked]="task.done" (change)="toggle(task)" class="accent-green-300" />
+              <input
+                type="checkbox"
+                [checked]="task.done"
+                (change)="toggle(task)"
+                class="accent-green-300"
+              />
               <span class="text-white">{{ task.text }}</span>
             </label>
             <button (click)="remove(task)" class="btn btn-danger">❌</button>
@@ -38,10 +65,18 @@
     <div>
       <h3 class="text-lg font-semibold text-green-300 uppercase mb-2">Ferdige</h3>
       <ul class="space-y-2">
-        <li *ngFor="let task of completedTasks; trackBy: trackById" class="flex flex-col bg-slate-600 p-3 rounded-lg opacity-70">
+        <li
+          *ngFor="let task of completedTasks; trackBy: trackById"
+          class="flex flex-col bg-slate-600 p-3 rounded-lg opacity-70"
+        >
           <div class="flex items-center justify-between">
             <label class="flex items-center gap-3">
-              <input type="checkbox" [checked]="task.done" (change)="toggle(task)" class="accent-green-300" />
+              <input
+                type="checkbox"
+                [checked]="task.done"
+                (change)="toggle(task)"
+                class="accent-green-300"
+              />
               <span class="text-white line-through">{{ task.text }}</span>
             </label>
             <button (click)="remove(task)" class="btn btn-danger">❌</button>
