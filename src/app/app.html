@@ -1,33 +1,30 @@
-<div class="min-h-screen bg-gray-100 text-gray-800 flex flex-col items-center justify-start p-6">
-  <ng-container *ngIf="!name; else content">
-    <!-- Navne-input -->
-    <div class="bg-white p-6 rounded shadow-md max-w-md w-full space-y-4 text-center">
-      <h1 class="text-2xl font-bold">Hva heter du? 👋</h1>
-      <input
-        [(ngModel)]="tempName"
-        placeholder="Skriv inn navnet ditt"
-        class="border rounded px-4 py-2 w-full text-center"
-      />
-      <button
-        (click)="saveName()"
-        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-full"
-      >
-        Fortsett
-      </button>
-    </div>
-  </ng-container>
+<body class="relative min-h-screen bg-slate-900 overflow-hidden">
 
-  <!-- Main innhold -->
-  <ng-template #content>
-    <header class="text-center mb-10">
-      <h1 class="text-4xl font-bold mb-2">Hei, {{ name }} 👋</h1>
-      <p class="text-sm text-gray-500">Velkommen til din Todo-liste. Hold styr på dagen din enkelt.</p>
-    </header>
+  <!-- Glow-blobs -->
+  <div class="absolute -inset-10 bg-gradient-to-tr from-cyan-500 via-teal-500 to-blue-500 blur-3xl opacity-40"></div>
+  <div class="absolute inset-y-1/4 left-0 w-80 h-80 bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 blur-2xl opacity-30"></div>
 
-    <app-todo></app-todo>
+  <!-- App-innhold -->
+  <div class="relative z-10 flex flex-col items-center justify-start p-6 font-sans">
+    <ng-container *ngIf="!name; else content">
+      <div class="card max-w-md w-full animate-fade-in">
+        <h1 class="text-2xl font-bold text-green-300">Hva heter du?</h1>
+        <input
+          [(ngModel)]="tempName"
+          placeholder="Fyll inn navnet ditt"
+          class="input w-full my-4"
+        />
+        <button (click)="saveName()" class="btn btn-primary w-full">Fortsett</button>
+      </div>
+    </ng-container>
 
-    <footer class="mt-10 text-xs text-gray-400 text-center">
-      Bygget med ❤️ og Tailwind
-    </footer>
-  </ng-template>
-</div>
+    <ng-template #content>
+      <header class="text-center mb-10 animate-fade-in">
+        <h1 class="text-4xl font-bold text-green-300">Hei, {{ name }} 👋</h1>
+        <p class="text-white/70 mt-2">Din personlige Todo-liste i stjernestøvet</p>
+      </header>
+      <app-todo></app-todo>
+      <footer class="mt-10 text-xs text-white/40">Bygget med ❤️ og Tailwind</footer>
+    </ng-template>
+  </div>
+</body>

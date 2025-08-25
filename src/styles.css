@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 1.2s ease-out both;
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .glow {
+    @apply shadow-[0_0_15px_rgba(52,211,153,0.6)] drop-shadow-xl;
+  }
+
+  .card {
+    @apply bg-white/10 text-white p-6 rounded-2xl shadow-2xl border border-white/20;
+  }
+
+  .btn {
+    @apply px-5 py-2 rounded-full font-semibold transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-green-400 hover:bg-green-300 text-white glow;
+  }
+
+  .btn-danger {
+    @apply bg-red-500 hover:bg-red-400 text-white;
+  }
+
+  .input {
+    @apply bg-white/20 text-white border border-white/40 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-300 transition-colors duration-200;
+  }
+
+  .tag {
+    @apply bg-white/30 text-white text-xs px-2 py-1 rounded-full;
+  }
+}

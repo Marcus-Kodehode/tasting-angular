@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common'; // 🔥 LEGG TIL DENNE
+import { NgIf } from '@angular/common';
 import { Todo } from './todo/todo';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Todo, FormsModule, NgIf], // 👈 Legg til NgIf her også
+  imports: [Todo, FormsModule, NgIf],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -16,9 +16,7 @@ export class App {
 
   ngOnInit() {
     const stored = localStorage.getItem('user:name');
-    if (stored) {
-      this.name = stored;
-    }
+    if (stored) this.name = stored;
   }
 
   saveName() {
