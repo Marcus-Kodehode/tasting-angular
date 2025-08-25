@@ -1,90 +1,112 @@
-<div class="p-6 max-w-md mx-auto space-y-6 bg-white shadow-lg rounded-md">
+<div class="p-6 max-w-4xl mx-auto space-y-6 bg-white shadow-lg rounded-md">
   <h2 class="text-2xl font-bold text-center">📝 Min Todo-liste</h2>
 
-  <!-- input + knapp -->
-  <div class="flex gap-2">
+  <!-- Input-skjema -->
+  <form (submit)="addTask()" class="grid grid-cols-1 md:grid-cols-4 gap-4">
     <input
       [(ngModel)]="newTask"
-      (keyup.enter)="addTask()"
-      placeholder="Ny oppgave"
-      class="border border-gray-300 rounded px-3 py-2 flex-1 outline-none focus:ring-2 focus:ring-blue-400"
+      name="task"
+      required
+      placeholder="Hva skal gjøres?"
+      class="border rounded px-3 py-2 col-span-1 md:col-span-2"
+    />
+    <input
+      [(ngModel)]="newDueDate"
+      name="dueDate"
+      type="date"
+      class="border rounded px-3 py-2"
+    />
+    <input
+      [(ngModel)]="newDueTime"
+      name="dueTime"
+      type="time"
+      class="border rounded px-3 py-2"
+    />
+    <input
+      [(ngModel)]="newCategory"
+      name="category"
+      placeholder="Kategori"
+      class="border rounded px-3 py-2"
     />
     <button
-      (click)="addTask()"
-      [disabled]="!newTask.trim()"
-      class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-40"
+      type="submit"
+      class="md:col-span-4 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
     >
       ➕ Legg til
     </button>
-  </div>
+  </form>
 
-  <!-- filtre + status -->
-  <div class="flex items-center justify-between text-sm">
+  <!-- Massehandlinger -->
+  <div *ngIf="selectMode" class="flex items-center justify-between text-sm border-t pt-4">
     <div class="space-x-2">
-      <button
-        (click)="setFilter('all')"
-        class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
-        [class.bg-black]="filter==='all'"
-        [class.text-white]="filter==='all'"
-      >
-        Alle
+      <button (click)="toggleSelectAll()" class="underline text-blue-600 text-xs">
+        {{ anySelected ? 'Fjern valg' : 'Velg alle' }}
       </button>
-      <button
-        (click)="setFilter('active')"
-        class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
-        [class.bg-black]="filter==='active'"
-        [class.text-white]="filter==='active'"
-      >
-        Aktive
+      <button (click)="markSelectedAsDone()" class="underline text-green-600 text-xs">
+        Marker som ferdig
       </button>
-      <button
-        (click)="setFilter('done')"
-        class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
-        [class.bg-black]="filter==='done'"
-        [class.text-white]="filter==='done'"
-      >
-        Ferdige
+      <button (click)="markSelectedAsUndone()" class="underline text-yellow-600 text-xs">
+        Marker som ikke ferdig
+      </button>
+      <button (click)="removeSelected()" class="underline text-red-600 text-xs">
+        Slett valgte
       </button>
     </div>
-    <div class="text-gray-500">{{ remaining }} igjen</div>
+    <button (click)="selectMode = false" class="text-xs text-gray-500 hover:underline">
+      ❌ Avslutt
+    </button>
   </div>
 
-  <!-- lista / tom-tilstand -->
-  <ng-container *ngIf="visible.length; else empty">
-    <ul class="space-y-2">
-      <li
-        *ngFor="let task of visible; trackBy: trackById"
-        class="flex items-center justify-between border border-gray-200 rounded px-3 py-2 bg-gray-50 hover:bg-gray-100"
-      >
-        <label class="flex items-center gap-3">
-          <input
-            type="checkbox"
-            class="accent-blue-500 w-4 h-4"
-            [checked]="task.done"
-            (change)="toggle(task)"
-          />
-          <span
-            [class.line-through]="task.done"
-            [class.text-gray-400]="task.done"
-            class="text-sm"
-          >
-            {{ task.text }}
-          </span>
-        </label>
-        <button (click)="remove(task)" class="text-sm text-red-500 hover:text-red-700">❌</button>
-      </li>
-    </ul>
-  </ng-container>
+  <!-- Oppgavelister: Aktive + Ferdige -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Aktive -->
+    <div>
+      <h3 class="text-lg font-semibold mb-2">📌 Aktive</h3>
+      <ul class="space-y-2">
+        <li *ngFor="let task of activeTasks; trackBy: trackById" class="flex items-center justify-between border rounded px-3 py-2 bg-gray-50 hover:bg-gray-100">
+          <label class="flex items-center gap-3">
+            <input
+              *ngIf="selectMode"
+              type="checkbox"
+              [(ngModel)]="task.selected"
+              class="w-4 h-4 accent-black"
+            />
+            <input
+              *ngIf="!selectMode"
+              type="checkbox"
+              [checked]="task.done"
+              (change)="toggle(task)"
+              class="w-4 h-4 accent-black"
+            />
+            <span class="text-sm">{{ task.text }}</span>
+          </label>
+          <button (click)="remove(task)" class="text-sm text-red-500 hover:text-red-700">❌</button>
+        </li>
+      </ul>
+    </div>
 
-  <!-- tom-tilstand -->
-  <ng-template #empty>
-    <p class="text-sm text-center text-gray-400">Ingen oppgaver i denne visningen.</p>
-  </ng-template>
-
-  <!-- fjern ferdige -->
-  <div *ngIf="anyDone" class="text-right">
-    <button (click)="clearCompleted()" class="text-xs text-blue-600 hover:underline">
-      🧹 Fjern ferdige
-    </button>
+    <!-- Ferdige -->
+    <div>
+      <h3 class="text-lg font-semibold mb-2">✅ Ferdige</h3>
+      <ul class="space-y-2">
+        <li *ngFor="let task of completedTasks; trackBy: trackById" class="flex items-center justify-between border rounded px-3 py-2 bg-gray-100">
+          <label class="flex items-center gap-3">
+            <input
+              type="checkbox"
+              [checked]="task.done"
+              (change)="toggle(task)"
+              class="w-4 h-4 accent-black"
+            />
+            <span class="text-sm line-through text-gray-500">{{ task.text }}</span>
+          </label>
+          <button (click)="remove(task)" class="text-sm text-red-500 hover:text-red-700">❌</button>
+        </li>
+      </ul>
+      <div *ngIf="anyDone" class="mt-2 text-right">
+        <button (click)="clearCompleted()" class="text-xs text-blue-600 hover:underline">
+          🧹 Fjern ferdige
+        </button>
+      </div>
+    </div>
   </div>
 </div>

@@ -14,19 +14,35 @@ type Filter = 'all' | 'active' | 'done';
 })
 export class Todo {
   newTask = '';
+  newDueDate = '';
+  newDueTime = '';
+  newCategory = '';
+
   tasks: Task[] = [];
   filter: Filter = 'all';
+  selectMode = false;
 
   constructor(private store: TodoStore) {
-    // last fra localStorage etter at store er injisert
     this.tasks = this.store.get();
   }
 
   addTask(): void {
     const t = this.newTask.trim();
     if (!t) return;
-    this.tasks.unshift({ id: Date.now(), text: t, done: false });
+
+    this.tasks.unshift({
+      id: Date.now(),
+      text: t,
+      done: false,
+      dueDate: this.newDueDate,
+      dueTime: this.newDueTime,
+      category: this.newCategory,
+    });
+
     this.newTask = '';
+    this.newDueDate = '';
+    this.newDueTime = '';
+    this.newCategory = '';
     this.persist();
   }
 
@@ -35,13 +51,37 @@ export class Todo {
     this.persist();
   }
 
+  toggleSelectAll(): void {
+    const value = this.anySelected ? false : true;
+    this.visible.forEach((t) => (t.selected = value));
+  }
+
+  markSelectedAsDone(): void {
+    this.tasks.forEach((t) => {
+      if (t.selected) t.done = true;
+    });
+    this.persist();
+  }
+
+  markSelectedAsUndone(): void {
+    this.tasks.forEach((t) => {
+      if (t.selected) t.done = false;
+    });
+    this.persist();
+  }
+
+  removeSelected(): void {
+    this.tasks = this.tasks.filter((t) => !t.selected);
+    this.persist();
+  }
+
   remove(task: Task): void {
-    this.tasks = this.tasks.filter(x => x.id !== task.id);
+    this.tasks = this.tasks.filter((x) => x.id !== task.id);
     this.persist();
   }
 
   clearCompleted(): void {
-    this.tasks = this.tasks.filter(t => !t.done);
+    this.tasks = this.tasks.filter((t) => !t.done);
     this.persist();
   }
 
@@ -49,19 +89,30 @@ export class Todo {
     this.filter = f;
   }
 
-  // avledet data
-  get visible(): Task[] {
-    if (this.filter === 'active') return this.tasks.filter(t => !t.done);
-    if (this.filter === 'done')   return this.tasks.filter(t =>  t.done);
-    return this.tasks;
+  get anySelected(): boolean {
+    return this.visible.some((t) => t.selected);
   }
 
   get remaining(): number {
-    return this.tasks.filter(t => !t.done).length;
+    return this.tasks.filter((t) => !t.done).length;
   }
 
   get anyDone(): boolean {
-    return this.tasks.some(t => t.done);
+    return this.tasks.some((t) => t.done);
+  }
+
+  get visible(): Task[] {
+    if (this.filter === 'active') return this.tasks.filter((t) => !t.done);
+    if (this.filter === 'done') return this.tasks.filter((t) => t.done);
+    return this.tasks;
+  }
+
+  get activeTasks(): Task[] {
+    return this.tasks.filter(t => !t.done);
+  }
+
+  get completedTasks(): Task[] {
+    return this.tasks.filter(t => t.done);
   }
 
   trackById(index: number, t: Task): number {
