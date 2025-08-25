@@ -1,59 +1,114 @@
-# TastingAngular
+<p align="center">
+  <img src="public/images/logo.png" alt="Marcus Logo" width="200"/>
+</p>
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0.
+<p align="center">
+  <img src="public/images/todo-logo.png" alt="Todo App Logo" width="200"/>
+</p>
 
-## Development server
+# ✅ Marcus Todo – Gjør dagen ryddig og strukturert
 
-To start a local development server, run:
+**Marcus Todo** er en minimalistisk, men kraftfull oppgaveapp bygget for å gi oversikt, kontroll og flyt i hverdagen.  
+Alt du trenger for å holde styr på dagens gjøremål – elegant designet og superrask i bruk.
 
-```bash
-ng serve
+---
+
+## 🧠 Formål og motivasjon
+
+Vi har alle hundre tanker i hodet – og like mange ting å huske på.  
+Denne appen er laget for å gjøre det enkelt å holde oversikt, strukturere og gjennomføre dagens oppgaver – uten unødvendig kompleksitet.
+
+Prosjektet er også et dypt personlig læringsprosjekt med høyt fokus på brukeropplevelse og moderne frontend-utvikling.
+
+---
+
+## 👤 Målgruppe
+
+Alle som trenger en rask, brukervennlig og pen todo-app.  
+Både studenter, arbeidstakere, utviklere og andre produktive sjeler vil kunne bruke denne.
+
+---
+
+## ✨ Kjernefunksjoner
+
+- 📝 **Oppgaver med detaljer**
+  - Legg til oppgaver med dato, tid og kategori
+- ✅ **Fullfør og filtrer**
+  - Marker som ferdig / ikke ferdig
+  - Del inn i aktive og ferdige
+- 🗂️ **Kategorier**
+  - Velg mellom standardkategorier – eller legg til egne
+- 💾 **Lokal lagring**
+  - Alt lagres i nettleseren din automatisk
+- 🌓 **Responsivt design**
+  - Tilpasset både desktop og mobil
+- 💅 **Stil og interaksjon**
+  - Subtil animasjon, mørkmodus, gradient glow og mer
+
+---
+
+## 🛠️ Teknologi brukt
+
+- **Angular (standalone components)** – Rammeverket hele appen er bygget med
+- **Tailwind CSS** – For moderne og responsiv styling
+- **LocalStorage** – Enkel lagring av oppgaver uten backend
+- **Figma** – For skisser og UI-planlegging  
+  🔗 *(Designlenke legges inn ved behov)*
+
+---
+
+## 🗂️ Prosjektstruktur
+
+```
+marcus-todo/
+├── src/
+│ ├── app/
+│ │ ├── todo/ # Hovedkomponent
+│ │ ├── todo.store.ts # Lokal datalagring
+│ │ └── app.component.ts # App-oppsett
+│ ├── assets/ # Bilder og ikoner
+│ └── styles.css # Globale stilklasser
+├── public/
+│ └── images/ # Logo og skjermbilder
+├── angular.json # Angular-oppsett
+├── tailwind.config.js # Tailwind-konfig
+└── package.json # Prosjektmetadata
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 📸 Eksempel på appen
 
-```bash
-ng generate component component-name
+<p align="center">
+  <img src="public/images/skjermbilde-todo.png" alt="Todo App Screenshot" width="400"/>
+</p>
+
+---
+
+## 💡 Planlagte og mulige utvidelser
+
+- 🧲 Drag & drop for rekkefølge
+- 📆 Visning gruppert etter dato
+- 🔔 Påminnelser (lokalt)
+- 🧹 Massehandling (fullfør, slett flere)
+- 🎨 Flere temaer
+- ☁️ Lagring i skyen (valgfritt)
+- 📱 Mobilapp (PWA eller native)
+
+---
+
+## ✍️ Signatur
+
+```
+//  One bug to find them,
+//  One fix to bring them all,
+//  And in the darkness bind them.
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## 📬 Kontakt
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Har du ideer, ønsker eller bare vil gi en high five?  
+Ta kontakt – prosjektet utvikles kontinuerlig.
