@@ -1,73 +1,37 @@
 <!-- Fil: src/app/app.html -->
-<body class="relative min-h-screen bg-slate-900 overflow-hidden">
-  <!--
-    Bakgrunnsgrafikk / "glow"-lag
-    ----------------------------------------------------
-    - absolute + blur + gradient for pene lys-effekter bak innholdet.
-    - -inset-10 utvider elementet utenfor viewport for myk feathering.
-    - opacity justerer intensitet.
-    - Disse ligger FØR innholdet i DOM, men bak via stacking (se z-10 på container).
-  -->
-  <div class="absolute -inset-10 bg-gradient-to-tr from-cyan-500 via-teal-500 to-blue-500 blur-3xl opacity-40"></div>
-  <div class="absolute inset-y-1/4 left-0 w-80 h-80 bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 blur-2xl opacity-30"></div>
+<body class="relative min-h-screen overflow-hidden bg-slate-900">
+  <div
+    class="absolute -inset-10 bg-gradient-to-tr from-cyan-500 via-teal-500 to-blue-500 blur-3xl opacity-40"
+  ></div>
+  <div
+    class="absolute left-0 inset-y-1/4 w-80 h-80 bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 blur-2xl opacity-30"
+  ></div>
 
-  <!--
-    Hovedcontainer for innholdet
-    ----------------------------------------------------
-    - relative z-10: legges over bakgrunnsglow.
-    - font-sans: bruker font fra Tailwind (@theme i styles.css, hvis du satt den).
-    - p-6: luft rundt.
-  -->
   <div class="relative z-10 flex flex-col items-center justify-start p-6 font-sans">
-
-    <!--
-      «Gatekeeper»: Hvis vi IKKE har name (falsy), vis navneskjerm.
-      *ngIf på <ng-container> rendrer ikke ekstra wrapper-element i DOM.
-      else content -> peker til <ng-template #content> nedenfor.
-      For at dette skal kompilere må App-komponenten ha en public property `name`
-      (f.eks. string | null).
-    -->
-    <ng-container *ngIf="!name; else content">
-
-      <!--
-        Kort med felt for midlertidig navn:
-        - [(ngModel)]="tempName": toveis-binding (krever FormsModule importert i App-komponenten).
-        - saveName(): metode i App.ts som bør sette this.name = this.tempName.trim()
-          (og gjerne lagre i localStorage hvis du vil huske navnet over reload).
-      -->
-      <div class="card max-w-md w-full animate-fade-in">
+    <ng-container *ngIf="!hasName; else content">
+      <div class="w-full max-w-md card animate-fade-in">
         <h1 class="text-2xl font-bold text-green-300">Hva heter du?</h1>
-
         <input
           [(ngModel)]="tempName"
           placeholder="Fyll inn navnet ditt"
-          class="input w-full my-4"
+          class="w-full my-4 input"
         />
-
-        <button (click)="saveName()" class="btn btn-primary w-full">Fortsett</button>
+        <button (click)="saveName()" class="w-full btn btn-primary">Fortsett</button>
       </div>
     </ng-container>
 
-    <!--
-      Alternativt innhold når name finnes.
-      <ng-template> rendres først når *ngIf peker hit (else content).
-    -->
     <ng-template #content>
-      <!-- Topptekst / greeting -->
-      <header class="text-center mb-10 animate-fade-in">
-        <h1 class="text-4xl font-bold text-green-300">Hei, {{ name }} 👋</h1>
-        <p class="text-white/70 mt-2">Din personlige Todo-liste i stjernestøvet</p>
-      </header>
-
-      <!--
-        Selve todo-komponenten:
-        - For at dette skal virke må App-komponenten importere Todo i sine `imports: []`
-          (standalone-komponent).
-      -->
-      <app-todo></app-todo>
-
-      <!-- Bunntekst -->
-      <footer class="mt-10 text-xs text-white/40">Bygget med ❤️ og Tailwind</footer>
+      <ng-container *ngIf="isEasterEgg; else todo">
+        <app-easter-egg></app-easter-egg>
+      </ng-container>
+      <ng-template #todo>
+        <header class="mb-10 text-center animate-fade-in">
+          <h1 class="text-4xl font-bold text-green-300">Hei, {{ name }} 👋</h1>
+          <p class="mt-2 text-white/70">Din personlige Todo-liste i stjernestøvet</p>
+        </header>
+        <app-todo></app-todo>
+        <footer class="mt-10 text-xs text-white/40">Bygget med ❤️ og Tailwind</footer>
+      </ng-template>
     </ng-template>
   </div>
 </body>
@@ -89,7 +53,7 @@ SAMMENDRAG – hva denne templaten gjør
 
 • Anbefaling (struktur):
     - Flytt body-klasser til src/index.html sin <body> ELLER erstatt <body> her med en <div>.
-    - Eksempel (hvis du bytter til <div>): <div class="relative min-h-screen bg-slate-900 overflow-hidden"> … </div>
+    - Eksempel (hvis du bytter til <div>): <div class="relative min-h-screen overflow-hidden bg-slate-900"> … </div>
 
 • Kodekrevs i App.ts (minimum):
     - public name: string | null = null;
