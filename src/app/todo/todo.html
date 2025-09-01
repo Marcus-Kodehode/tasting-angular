@@ -1,151 +1,188 @@
 <!-- Fil: src/app/todo/todo.html -->
-<div class="card animate-fade-in max-h-[85vh] overflow-y-auto">
-  <h2 class="mb-4 text-2xl font-bold text-green-300">📝 Min Todo-liste</h2>
+<div class="max-w-4xl mx-auto card card-fixed animate-fade-in">
+  <!-- Topp: tittel + verktøylinje -->
+  <div class="flex flex-col gap-3 mb-4 sm:flex-row sm:items-center sm:justify-between">
+    <h2 class="text-2xl font-bold text-green-300">📝 Min Todo-liste</h2>
 
-  <!-- Sorteringsmeny -->
-  <div class="flex justify-end mb-4">
-    <label class="mr-2 text-sm text-white">Sorter etter:</label>
-    <select
-      [(ngModel)]="sortBy"
-      class="text-sm text-white input bg-slate-800"
-      style="background-color: #1e293b;"
-    >
-      <option value="date">Dato</option>
-      <option value="name">Navn</option>
-      <option value="category">Kategori</option>
-    </select>
+    <div class="flex items-center gap-3">
+      <label class="text-sm text-white/80">Sorter etter:</label>
+      <select [(ngModel)]="sortBy" class="text-sm text-white input">
+        <option value="date">Dato</option>
+        <option value="name">Navn</option>
+        <option value="category">Kategori</option>
+      </select>
+
+      <button (click)="toggleForm()" class="text-xs text-green-300 hover:underline">
+        {{ showForm ? 'Skjul skjema' : 'Vis skjema' }}
+      </button>
+    </div>
   </div>
 
   <!-- Skjema -->
-  <form (submit)="addTask()" class="grid grid-cols-1 gap-3 mb-4 sm:grid-cols-2 lg:grid-cols-5">
-    <input [(ngModel)]="newTask" name="task" placeholder="Hva skal gjøres?" class="w-full col-span-1 sm:col-span-2 input" />
-
-    <input [(ngModel)]="newStartDate" name="startDate" type="date" class="w-full input" />
-    <input [(ngModel)]="newDueDate" name="dueDate" type="date" class="w-full input" />
-    <input [(ngModel)]="newDueTime" name="dueTime" type="time" class="w-full input" />
-    <input [(ngModel)]="newEndTime" name="endTime" type="time" class="w-full input" />
-
-    <select
-      [(ngModel)]="newCategory"
-      name="category"
-      class="w-full text-white input bg-slate-800"
-      style="background-color: #1e293b;"
-    >
-      <option value="" disabled selected>Velg kategori</option>
-      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
-      <option value="custom">Egendefinert...</option>
-    </select>
-
-    <input
-      *ngIf="newCategory === 'custom'"
-      [(ngModel)]="customCategory"
-      name="customCategory"
-      placeholder="Egen kategori"
-      class="w-full text-white input bg-slate-800"
-      style="background-color: #1e293b;"
-    />
-
-    <select
-      [(ngModel)]="newPriority"
-      name="priority"
-      class="w-full text-white input bg-slate-800"
-      style="background-color: #1e293b;"
-    >
-      <option value="" disabled selected>Prioritet</option>
-      <option *ngFor="let p of priorities" [value]="p">{{ p }}</option>
-    </select>
-
-    <div class="flex items-center justify-center w-full text-white input bg-slate-800" style="background-color: #1e293b;">
-      <input [(ngModel)]="newColor" name="color" type="color" class="w-6 h-6 bg-transparent border-0 cursor-pointer" />
+  <form *ngIf="showForm" (ngSubmit)="addTask()" class="mb-6 space-y-4">
+    <!-- Rad: Hva -->
+    <div class="grid grid-cols-1 gap-3">
+      <label class="flex flex-col">
+        <span class="mb-1 text-xs tracking-wide uppercase text-white/60">Hva skal gjøres?</span>
+        <input [(ngModel)]="newTask" name="task" placeholder="Skriv oppgaven…" class="input" />
+      </label>
     </div>
 
-    <select
-      [(ngModel)]="newRepeat"
-      name="repeat"
-      class="w-full text-white input bg-slate-800"
-      style="background-color: #1e293b;"
-    >
-      <option value="" disabled selected>Gjentakelse</option>
-      <option *ngFor="let r of repeats" [value]="r">{{ r }}</option>
-    </select>
+    <!-- Rad: Dato/tid -->
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <label class="flex flex-col">
+        <span class="mb-1 text-xs tracking-wide uppercase text-white/60">Startdato</span>
+        <input [(ngModel)]="newStartDate" name="startDate" type="date" class="input" />
+      </label>
 
-    <input [(ngModel)]="newLink" name="link" placeholder="Lenke (valgfritt)" class="w-full input" />
-    <input [(ngModel)]="newProject" name="project" placeholder="Prosjekt" class="w-full input" />
+      <label class="flex flex-col">
+        <span class="mb-1 text-xs tracking-wide uppercase text-white/60">Forfallsdato</span>
+        <input [(ngModel)]="newDueDate" name="dueDate" type="date" class="input" />
+      </label>
 
-    <input [(ngModel)]="newNote" name="note" placeholder="Notat / beskrivelse" class="w-full col-span-full input" />
+      <label class="flex flex-col">
+        <span class="mb-1 text-xs tracking-wide uppercase text-white/60">Starttid</span>
+        <input [(ngModel)]="newDueTime" name="dueTime" type="time" class="input" />
+      </label>
 
-    <button type="submit" class="w-full mt-2 btn btn-primary col-span-full">➕ Legg til</button>
+      <label class="flex flex-col">
+        <span class="mb-1 text-xs tracking-wide uppercase text-white/60">Sluttid</span>
+        <input [(ngModel)]="newEndTime" name="endTime" type="time" class="input" />
+      </label>
+    </div>
+
+    <!-- Rad: Kategorier/valg -->
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <label class="flex flex-col">
+        <span class="mb-1 text-xs tracking-wide uppercase text-white/60">Kategori</span>
+        <select [(ngModel)]="newCategory" name="category" class="text-white input">
+          <option value="" disabled selected>Velg kategori</option>
+          <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+          <option value="custom">Egendefinert…</option>
+        </select>
+      </label>
+
+      <label *ngIf="newCategory === 'custom'" class="flex flex-col sm:col-span-1">
+        <span class="mb-1 text-xs tracking-wide uppercase text-white/60">Egendefinert kategori</span>
+        <input [(ngModel)]="customCategory" name="customCategory" placeholder="F.eks. Helse, Skole …" class="text-white input" />
+      </label>
+
+      <label class="flex flex-col">
+        <span class="mb-1 text-xs tracking-wide uppercase text-white/60">Prioritet</span>
+        <select [(ngModel)]="newPriority" name="priority" class="text-white input">
+          <option value="" disabled selected>Prioritet</option>
+          <option *ngFor="let p of priorities" [value]="p">{{ p }}</option>
+        </select>
+      </label>
+
+      <label class="flex flex-col">
+        <span class="mb-1 text-xs tracking-wide uppercase text-white/60">Gjentakelse</span>
+        <select [(ngModel)]="newRepeat" name="repeat" class="text-white input">
+          <option value="" disabled selected>Gjentakelse</option>
+          <option *ngFor="let r of repeats" [value]="r">{{ r }}</option>
+        </select>
+      </label>
+    </div>
+
+    <!-- Rad: Tillegg -->
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <label class="flex flex-col lg:col-span-2">
+        <span class="mb-1 text-xs tracking-wide uppercase text-white/60">Lenke (valgfritt)</span>
+        <input [(ngModel)]="newLink" name="link" placeholder="https:// …" class="input" />
+      </label>
+
+      <label class="flex flex-col lg:col-span-2">
+        <span class="mb-1 text-xs tracking-wide uppercase text-white/60">Prosjekt</span>
+        <input [(ngModel)]="newProject" name="project" placeholder="Prosjektnavn" class="input" />
+      </label>
+    </div>
+
+    <!-- Rad: Notat -->
+    <div class="grid grid-cols-1">
+      <label class="flex flex-col">
+        <span class="mb-1 text-xs tracking-wide uppercase text-white/60">Notat / beskrivelse</span>
+        <textarea [(ngModel)]="newNote" name="note" rows="2" placeholder="Kort beskrivelse …" class="input"></textarea>
+      </label>
+    </div>
+
+    <!-- Handling -->
+    <div>
+      <button type="submit" class="w-full btn btn-primary">➕ Legg til</button>
+    </div>
   </form>
 
   <!-- Fullfør alle -->
-  <div *ngIf="anyDone" class="mb-4 text-right">
-    <button (click)="markAllDone()" class="text-xs text-green-400 hover:underline">
-      ✅ Fullfør alle oppgaver
-    </button>
+  <div *ngIf="anyDone" class="mb-6 text-right">
+    <button (click)="markAllDone()" class="text-xs text-green-300 hover:underline">✅ Fullfør alle oppgaver</button>
   </div>
 
-  <!-- Oppgavelister -->
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-    <div>
-      <h3 class="mb-2 text-lg font-semibold text-green-300 uppercase">Aktive</h3>
-      <ul class="space-y-2">
-        <li
-          *ngFor="let task of activeTasks; trackBy: trackById"
-          class="flex flex-col p-3 rounded-lg"
-          [ngStyle]="{ 'borderLeft': '4px solid ' + (task.color || '#4ade80') }"
-        >
-          <div class="flex items-center justify-between">
-            <label class="flex items-center gap-3">
-              <input type="checkbox" [checked]="task.done" (change)="toggle(task)" class="accent-green-300" />
-              <span class="text-white">{{ task.text }}</span>
-            </label>
-            <button (click)="remove(task)" class="btn btn-danger">❌</button>
-          </div>
-          <p *ngIf="task.note" class="mt-1 text-sm ml-7 text-white/50">📝 {{ task.note }}</p>
-          <div class="flex items-center mt-1 space-x-4 text-xs ml-7 text-white/70">
-            <span *ngIf="task.startDate">🔓 {{ task.startDate }}</span>
-            <span *ngIf="task.dueDate">📅 {{ task.dueDate }}</span>
-            <span *ngIf="task.dueTime">⏰ {{ task.dueTime }}</span>
-            <span *ngIf="task.endTime">⏱ {{ task.endTime }}</span>
-            <span *ngIf="task.category">🗂️ {{ task.category }}</span>
-            <span *ngIf="task.priority">🔥 {{ task.priority }}</span>
-            <span *ngIf="task.repeat">🔁 {{ task.repeat }}</span>
-            <span *ngIf="task.project">📂 {{ task.project }}</span>
-            <a *ngIf="task.link" [href]="task.link" target="_blank" class="text-blue-400 underline">🔗 Vedlegg</a>
-          </div>
-        </li>
-      </ul>
-    </div>
+  <!-- Aktive oppgaver -->
+  <div class="mb-8">
+    <h3 class="mb-2 text-lg font-semibold text-green-300 uppercase">Aktive</h3>
+    <ul class="space-y-3">
+      <li
+        *ngFor="let task of activeTasks | slice:0:(showAllActive ? activeTasks.length : 3); trackBy: trackById"
+        class="p-3 border-l-4 rounded-lg"
+        [ngStyle]="{ 'borderLeftColor': (task.color || '#4ade80') }"
+      >
+        <div class="flex items-start justify-between gap-3">
+          <label class="flex items-start gap-3">
+            <input type="checkbox" [checked]="task.done" (change)="toggle(task)" class="mt-1 accent-green-300" />
+            <span class="leading-6 text-white">{{ task.text }}</span>
+          </label>
+          <button (click)="remove(task)" class="btn btn-danger">❌</button>
+        </div>
 
-    <div>
-      <h3 class="mb-2 text-lg font-semibold text-green-300 uppercase">Ferdige</h3>
-      <ul class="space-y-2">
-        <li
-          *ngFor="let task of completedTasks; trackBy: trackById"
-          class="flex flex-col p-3 rounded-lg opacity-70"
-          [ngStyle]="{ 'borderLeft': '4px solid ' + (task.color || '#4ade80') }"
-        >
-          <div class="flex items-center justify-between">
-            <label class="flex items-center gap-3">
-              <input type="checkbox" [checked]="task.done" (change)="toggle(task)" class="accent-green-300" />
-              <span class="text-white line-through">{{ task.text }}</span>
-            </label>
-            <button (click)="remove(task)" class="btn btn-danger">❌</button>
-          </div>
-          <p *ngIf="task.note" class="mt-1 text-sm ml-7 text-white/50">📝 {{ task.note }}</p>
-          <div class="flex items-center mt-1 space-x-4 text-xs ml-7 text-white/70">
-            <span *ngIf="task.startDate">🔓 {{ task.startDate }}</span>
-            <span *ngIf="task.dueDate">📅 {{ task.dueDate }}</span>
-            <span *ngIf="task.dueTime">⏰ {{ task.dueTime }}</span>
-            <span *ngIf="task.endTime">⏱ {{ task.endTime }}</span>
-            <span *ngIf="task.category">🗂️ {{ task.category }}</span>
-            <span *ngIf="task.priority">🔥 {{ task.priority }}</span>
-            <span *ngIf="task.repeat">🔁 {{ task.repeat }}</span>
-            <span *ngIf="task.project">📂 {{ task.project }}</span>
-            <a *ngIf="task.link" [href]="task.link" target="_blank" class="text-blue-400 underline">🔗 Vedlegg</a>
-          </div>
-        </li>
-      </ul>
+        <p *ngIf="task.note" class="mt-2 text-sm text-white/60 ml-7">📝 {{ task.note }}</p>
+
+        <div class="flex flex-wrap gap-2 mt-2 text-xs ml-7">
+          <span *ngIf="task.startDate" class="tag">Start: {{ task.startDate }}</span>
+          <span *ngIf="task.dueDate" class="tag">Dato: {{ task.dueDate }}</span>
+          <span *ngIf="task.dueTime" class="tag">Tid: {{ task.dueTime }}</span>
+          <span *ngIf="task.endTime" class="tag">Slutt: {{ task.endTime }}</span>
+          <span *ngIf="task.category" class="tag">Kategori: {{ task.category }}</span>
+          <span *ngIf="task.priority" class="tag">Prioritet: {{ task.priority }}</span>
+          <span *ngIf="task.repeat" class="tag">Gjentakelse: {{ task.repeat }}</span>
+          <span *ngIf="task.project" class="tag">Prosjekt: {{ task.project }}</span>
+          <a *ngIf="task.link" [href]="task.link" target="_blank" class="underline tag">Lenke</a>
+        </div>
+      </li>
+    </ul>
+
+    <div *ngIf="activeTasks.length > 3" class="mt-2">
+      <button class="text-xs text-white/70 hover:underline" (click)="showAllActive = !showAllActive">
+        {{ showAllActive ? 'Vis færre' : 'Vis mer' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Ferdige oppgaver -->
+  <div>
+    <h3 class="mb-2 text-lg font-semibold text-green-300 uppercase">Ferdige</h3>
+    <ul class="space-y-3">
+      <li
+        *ngFor="let task of completedTasks | slice:0:(showAllCompleted ? completedTasks.length : 3); trackBy: trackById"
+        class="p-3 border-l-4 rounded-lg opacity-70"
+        [ngStyle]="{ 'borderLeftColor': (task.color || '#4ade80') }"
+      >
+        <div class="flex items-start justify-between gap-3">
+          <label class="flex items-start gap-3">
+            <input type="checkbox" [checked]="task.done" (change)="toggle(task)" class="mt-1 accent-green-300" />
+            <span class="leading-6 line-through text-white/70">{{ task.text }}</span>
+          </label>
+          <button (click)="remove(task)" class="btn btn-danger">❌</button>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mt-2 text-xs ml-7">
+          <span *ngIf="task.dueDate" class="tag">Ferdig</span>
+        </div>
+      </li>
+    </ul>
+
+    <div *ngIf="completedTasks.length > 3" class="mt-2">
+      <button class="text-xs text-white/70 hover:underline" (click)="showAllCompleted = !showAllCompleted">
+        {{ showAllCompleted ? 'Vis færre' : 'Vis mer' }}
+      </button>
     </div>
   </div>
 </div>
@@ -153,14 +190,12 @@
 <!--
   SAMMENDRAG (hva denne templaten gjør)
   ----------------------------------------------------
-  - Viser et skjema for å registrere ny oppgave:
-      • newTask (tekst), newDueDate (dato), newDueTime (tid), newCategory (valg), customCategory (tekst ved 'custom').
-      • Bruker [(ngModel)] for toveis-binding. name-attributt er påkrevd for ngModel i form.
-      • (submit)="addTask()" kaller komponentmetoden som oppretter ny Task.
-        Tips: vurder (ngSubmit) på <form> for mer "Angular-riktig" håndtering.
-  - Viser to lister:
-      • Aktive (activeTasks) og Ferdige (completedTasks), hver rendret med *ngFor og trackById for ytelse.
-      • toggle(task) flipper done; remove(task) sletter.
-      • Meta-informasjon (dueDate, dueTime, category) vises kun når den finnes med *ngIf.
-  - Tailwind/utility-klasser brukes for layout/typografi/farger; egne helper-klasser (card, btn, tag) kan være definert i din CSS.
+  - Fjerner scroll fra kortet og lar hele siden scrolle naturlig.
+  - Rydder opp skjema:
+      • Labels over feltene, konsekvent grid (1 / 2 / 4 kolonner).
+      • Egendefinert kategori vises kun når den trengs.
+      • Notat som <textarea> for bedre skriving.
+      • Én, stor «Legg til»-knapp nederst.
+  - Bruker .tag-chips i oppgavekort for meta (dato/tid/kategori osv.).
+  - Beholder farger og stil (.card/.input/.btn) fra styles.css.
 -->

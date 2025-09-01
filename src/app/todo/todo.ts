@@ -1,7 +1,7 @@
 // Fil: src/app/todo/todo.ts
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgForOf, NgStyle, NgClass } from '@angular/common';
+import { NgIf, NgForOf, NgStyle, NgClass, SlicePipe } from '@angular/common';
 import { TodoStore, Task } from './todo.store';
 
 type Filter = 'all' | 'active' | 'done';
@@ -9,19 +9,18 @@ type Filter = 'all' | 'active' | 'done';
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [FormsModule, NgIf, NgForOf, NgStyle, NgClass],
+  imports: [FormsModule, NgIf, NgForOf, NgStyle, NgClass, SlicePipe],
   templateUrl: './todo.html',
   styleUrl: './todo.css',
 })
 export class Todo {
-  // --- Inputfelt ---
+  // Inputfelter
   newTask = '';
   newDueDate = '';
   newDueTime = '';
   newEndTime = '';
   newCategory = '';
   customCategory = '';
-
   newNote = '';
   newPriority = '';
   newColor = '';
@@ -30,7 +29,6 @@ export class Todo {
   newStartDate = '';
   newProject = '';
 
-  // --- Lister for valgbare felter ---
   categories = ['Jobb', 'Hjem', 'Skole', 'Trening', 'Helse'];
   priorities = ['Lav', 'Middels', 'Høy'];
   repeats = ['Daglig', 'Ukentlig', 'Annenhver uke'];
@@ -38,6 +36,11 @@ export class Todo {
   tasks: Task[] = [];
   filter: Filter = 'all';
   sortBy: string = 'date';
+
+  // Expanders
+  showForm = true;
+  showAllActive = false;
+  showAllCompleted = false;
 
   constructor(private store: TodoStore) {
     this.tasks = this.store.get();
@@ -66,7 +69,7 @@ export class Todo {
       project: this.newProject,
     });
 
-    // Reset alle inputfelt
+    // Reset feltene
     this.newTask =
       this.newStartDate =
       this.newDueDate =
@@ -96,19 +99,24 @@ export class Todo {
   }
 
   markAllDone(): void {
-    // Sett alle som IKKE er ferdige til ferdig
     this.tasks.forEach((t) => {
       if (!t.done) t.done = true;
     });
 
-    // Fjern alle som allerede var ferdige
     this.tasks = this.tasks.filter((t) => !t.done || t.selected);
-
     this.persist();
   }
 
-  setFilter(f: Filter): void {
-    this.filter = f;
+  toggleForm(): void {
+    this.showForm = !this.showForm;
+  }
+
+  toggleShowAll(type: 'active' | 'completed'): void {
+    if (type === 'active') {
+      this.showAllActive = !this.showAllActive;
+    } else {
+      this.showAllCompleted = !this.showAllCompleted;
+    }
   }
 
   get anyDone(): boolean {
