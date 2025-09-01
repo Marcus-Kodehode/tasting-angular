@@ -1,8 +1,7 @@
 // Fil: src/app/todo/todo.ts
-
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgFor, NgIf, NgStyle } from '@angular/common';
+import { NgIf, NgForOf, NgStyle, NgClass } from '@angular/common';
 import { TodoStore, Task } from './todo.store';
 
 type Filter = 'all' | 'active' | 'done';
@@ -10,33 +9,34 @@ type Filter = 'all' | 'active' | 'done';
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [FormsModule, NgFor, NgIf, NgStyle],
+  imports: [FormsModule, NgIf, NgForOf, NgStyle, NgClass],
   templateUrl: './todo.html',
   styleUrl: './todo.css',
 })
 export class Todo {
-  // --- Felt for ny oppgave ---
+  // --- Inputfelt ---
   newTask = '';
   newDueDate = '';
   newDueTime = '';
+  newEndTime = '';
   newCategory = '';
   customCategory = '';
 
-  // --- Nye felt ---
   newNote = '';
   newPriority = '';
   newColor = '';
   newRepeat = '';
   newLink = '';
-  newEstimatedTime = '';
   newStartDate = '';
   newProject = '';
 
+  // --- Lister for valgbare felter ---
   categories = ['Jobb', 'Hjem', 'Skole', 'Trening', 'Helse'];
   priorities = ['Lav', 'Middels', 'Høy'];
+  repeats = ['Daglig', 'Ukentlig', 'Annenhver uke'];
+
   tasks: Task[] = [];
   filter: Filter = 'all';
-  selectMode = false;
   sortBy: string = 'date';
 
   constructor(private store: TodoStore) {
@@ -53,31 +53,32 @@ export class Todo {
       id: Date.now(),
       text: t,
       done: false,
+      startDate: this.newStartDate,
       dueDate: this.newDueDate,
       dueTime: this.newDueTime,
+      endTime: this.newEndTime,
       category,
       note: this.newNote,
       priority: this.newPriority,
-      color: this.newColor,
       repeat: this.newRepeat,
       link: this.newLink,
-      estimatedTime: this.newEstimatedTime,
-      startDate: this.newStartDate,
+      color: this.newColor,
       project: this.newProject,
     });
 
+    // Reset alle inputfelt
     this.newTask =
+      this.newStartDate =
       this.newDueDate =
       this.newDueTime =
+      this.newEndTime =
       this.newCategory =
       this.customCategory =
       this.newNote =
       this.newPriority =
-      this.newColor =
       this.newRepeat =
       this.newLink =
-      this.newEstimatedTime =
-      this.newStartDate =
+      this.newColor =
       this.newProject =
         '';
 
@@ -90,32 +91,19 @@ export class Todo {
   }
 
   remove(task: Task): void {
-    this.tasks = this.tasks.filter((x) => x.id !== task.id);
+    this.tasks = this.tasks.filter((t) => t.id !== task.id);
     this.persist();
   }
 
-  clearCompleted(): void {
-    this.tasks = this.tasks.filter((t) => !t.done);
-    this.persist();
-  }
+  markAllDone(): void {
+    // Sett alle som IKKE er ferdige til ferdig
+    this.tasks.forEach((t) => {
+      if (!t.done) t.done = true;
+    });
 
-  toggleSelectAll(): void {
-    const value = this.anySelected ? false : true;
-    this.visible.forEach((t) => (t.selected = value));
-  }
+    // Fjern alle som allerede var ferdige
+    this.tasks = this.tasks.filter((t) => !t.done || t.selected);
 
-  markSelectedAsDone(): void {
-    this.tasks.forEach((t) => t.selected && (t.done = true));
-    this.persist();
-  }
-
-  markSelectedAsUndone(): void {
-    this.tasks.forEach((t) => t.selected && (t.done = false));
-    this.persist();
-  }
-
-  removeSelected(): void {
-    this.tasks = this.tasks.filter((t) => !t.selected);
     this.persist();
   }
 
@@ -123,26 +111,20 @@ export class Todo {
     this.filter = f;
   }
 
-  get anySelected(): boolean {
-    return this.visible.some((t) => t.selected);
-  }
-
-  get remaining(): number {
-    return this.tasks.filter((t) => !t.done).length;
-  }
-
   get anyDone(): boolean {
     return this.tasks.some((t) => t.done);
   }
 
   get visible(): Task[] {
-    let sorted = [...this.tasks];
-    if (this.sortBy === 'name') sorted.sort((a, b) => a.text.localeCompare(b.text));
-    else if (this.sortBy === 'date')
-      sorted.sort((a, b) => (a.dueDate || '').localeCompare(b.dueDate || ''));
-    else if (this.sortBy === 'category')
-      sorted.sort((a, b) => (a.category || '').localeCompare(b.category || ''));
-    return sorted;
+    let list = [...this.tasks];
+    if (this.sortBy === 'date') {
+      list.sort((a, b) => (a.dueDate || '').localeCompare(b.dueDate || ''));
+    } else if (this.sortBy === 'name') {
+      list.sort((a, b) => a.text.localeCompare(b.text));
+    } else if (this.sortBy === 'category') {
+      list.sort((a, b) => (a.category || '').localeCompare(b.category || ''));
+    }
+    return list;
   }
 
   get activeTasks(): Task[] {

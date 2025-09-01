@@ -1,80 +1,59 @@
 // Fil: src/app/todo/todo.store.ts
 // ---------------------------------
 // Enkel "store"/tjeneste for å persistere Todo-oppgaver i localStorage.
-// - Brukes av komponenten(e) via Dependency Injection (DI).
-// - Lagrer hele listen i én JSON-streng under nøkkelen KEY.
-// - Bevisst minimal: ingen reaktivitet, kun get/set mot localStorage.
 
 import { Injectable } from '@angular/core';
 
 /**
  * Domeneobjekt for én oppgave i Todo-appen.
- * - `dueDate` og `dueTime` lagres som strenger av enkelhetshensyn (lett å vise/binde i template).
- * - `selected` kan brukes til multivalg (bulk-slett/markér ferdig) i UI.
  */
 export interface Task {
-  id: number;
-  text: string;
-  done: boolean;
-  dueDate?: string;
-  dueTime?: string;
-  category?: string;
-  selected?: boolean;
+  id: number;             // Unik ID
+  text: string;           // Oppgavetekst
+  done: boolean;          // Ferdigstilt eller ikke
 
-  // 👇 Nye felter:
-  note?: string;
-  priority?: string;
-  color?: string;
-  repeat?: string;
-  link?: string;
-  estimatedTime?: string;
-  startDate?: string;
-  project?: string;
+  startDate?: string;     // Startdato (valgfritt)
+  dueDate?: string;       // Forfallsdato (valgfritt)
+  dueTime?: string;       // Starttid (valgfritt)
+  endTime?: string;       // Sluttid (valgfritt)
+
+  category?: string;      // Kategori
+  note?: string;          // Notat eller beskrivelse
+  priority?: string;      // Lav / Middels / Høy
+  repeat?: string;        // Gjentakelse (f.eks. ukentlig)
+  link?: string;          // URL til fil, side, vedlegg
+  color?: string;         // Fargekode (hex)
+  project?: string;       // Prosjektnavn
+  selected?: boolean;     // Multiselect-bruk i UI
 }
 
 /**
- * Nøkkel i localStorage.
- * Tips: behold et "versjonsnavn" i nøkkelen (f.eks. v1) slik at du kan migrere senere uten
- * å krasje gammel data (lag ny KEY = 'todo:v2' og migrer ved behov).
+ * Nøkkel brukt i localStorage
  */
-const KEY = 'todo:v1';
+const KEY = 'todo:v2';
 
-/**
- * @Injectable({ providedIn: 'root' })
- * - Gjør tjenesten tilgjengelig som singleton i hele appen (Angular oppretter ett felles
- *   instans som alle komponenter deler).
- * - Du slipper å registrere den i en providers-liste manuelt.
- */
 @Injectable({ providedIn: 'root' })
 export class TodoStore {
   /**
-   * Leser hele oppgavelisten fra localStorage.
-   * - Returnerer [] dersom nøkkelen mangler eller JSON-parsing feiler.
-   * - NB: localStorage finnes kun i nettleser. Hvis du senere skrur på SSR,
-   *   må dette kodes defensivt (f.eks. sjekke `typeof window !== 'undefined'`).
+   * Leser hele todo-lista fra localStorage.
    */
   get(): Task[] {
     try {
-      // Hent rå streng; fall tilbake på tom liste '[]' dersom KEY ikke finnes.
       const raw = localStorage.getItem(KEY) || '[]';
-      // Parse til array av Task. Vi stoler på at dataen har riktig form.
-      // (Vil du være ekstra trygg: valider schema før return.)
       return JSON.parse(raw) as Task[];
     } catch {
-      // Ved korrupt JSON eller annen feil – returner tom liste for å holde appen kjørende.
       return [];
     }
   }
 
   /**
-   * Lagrer hele oppgavelisten tilbake til localStorage som JSON.
-   * - JSON.stringify serialiserer objektene til en streng.
-   * - localStorage er synkron og har begrenset lagringsplass (typisk 5–10 MB).
+   * Skriver hele todo-lista til localStorage.
    */
   set(tasks: Task[]) {
     localStorage.setItem(KEY, JSON.stringify(tasks));
   }
 }
+
 
 /* -------------------------------------------------------
  SAMMENDRAG
