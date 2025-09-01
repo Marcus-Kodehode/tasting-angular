@@ -13,13 +13,23 @@ import { Injectable } from '@angular/core';
  * - `selected` kan brukes til multivalg (bulk-slett/markér ferdig) i UI.
  */
 export interface Task {
-  id: number;          // Unik ID (her bruker vi typisk Date.now() ved opprettelse)
-  text: string;        // Selve oppgaveteksten
-  done: boolean;       // Status: true = ferdig, false = aktiv
-  dueDate?: string;    // (valgfritt) ISO-dato, f.eks. "2025-08-26"
-  dueTime?: string;    // (valgfritt) klokkeslett "HH:mm"
-  category?: string;   // (valgfritt) f.eks. "Hjemme", "Skole"
-  selected?: boolean;  // (valgfritt) hjelpetilstand for multiselect i UI
+  id: number;
+  text: string;
+  done: boolean;
+  dueDate?: string;
+  dueTime?: string;
+  category?: string;
+  selected?: boolean;
+
+  // 👇 Nye felter:
+  note?: string;
+  priority?: string;
+  color?: string;
+  repeat?: string;
+  link?: string;
+  estimatedTime?: string;
+  startDate?: string;
+  project?: string;
 }
 
 /**
@@ -37,7 +47,6 @@ const KEY = 'todo:v1';
  */
 @Injectable({ providedIn: 'root' })
 export class TodoStore {
-
   /**
    * Leser hele oppgavelisten fra localStorage.
    * - Returnerer [] dersom nøkkelen mangler eller JSON-parsing feiler.
