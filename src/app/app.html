@@ -33,6 +33,7 @@
         </div>
       </div>
     </ng-container>
+    <!-- Global språkvelger – alltid synlig, horisontal og sentrert -->
     <div class="mx-auto mb-4 lang-switch">
       <img
         *ngFor="let langObj of supportedLanguages"
@@ -55,7 +56,6 @@
         </h1>
         <p class="mt-2 text-white/70">{{ 'APP.TAGLINE' | translate }}</p>
       </header>
-      <!-- Global språkvelger – alltid synlig, horisontal og sentrert -->
       <app-todo></app-todo>
 
       <footer class="mt-10 text-xs text-white/40">{{ 'APP.FOOTER' | translate }}</footer>
