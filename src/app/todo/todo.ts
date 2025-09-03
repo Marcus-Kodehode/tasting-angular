@@ -1,3 +1,4 @@
+// Fil: src/app/todo/todo.ts
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgForOf, NgStyle, NgClass, SlicePipe, AsyncPipe } from '@angular/common';
@@ -6,40 +7,50 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TodoStore, Task } from './todo.store';
 import { SUPPORTED_LANGUAGES, Lang } from '../i18n';
 
+/** Filtre i UI */
 type Filter = 'all' | 'active' | 'done';
+
+/** Språk-uavhengige nøkler vi lagrer for select-feltene */
+type CatKey = 'WORK' | 'HOME' | 'SCHOOL' | 'TRAINING' | 'HEALTH';
+type PrioKey = 'LOW' | 'MEDIUM' | 'HIGH';
+type RepeatKey = 'DAILY' | 'WEEKLY' | 'BIWEEKLY';
+
+/** Input-feltet for kategori må også kunne være tomt eller 'custom' */
+type NewCategory = '' | CatKey | 'custom';
 
 @Component({
   selector: 'app-todo',
   standalone: true,
   templateUrl: './todo.html',
   styleUrls: ['./todo.css'],
-  imports: [FormsModule, NgIf, NgForOf, NgStyle, SlicePipe, TranslateModule],
+  imports: [FormsModule, NgIf, NgForOf, NgStyle, NgClass, SlicePipe, AsyncPipe, TranslateModule],
 })
 export class Todo {
-  // ----------------------------------------
-  // 🟩 Inputfelter for ny oppgave
-  // ----------------------------------------
+  // ---------------------------
+  // 🟩 Inputfelter (skjema)
+  // ---------------------------
   newTask = '';
   newDueDate = '';
   newDueTime = '';
   newEndTime = '';
-  newCategory = '';
+  newCategory: NewCategory = '';
   customCategory = '';
   newNote = '';
-  newPriority = '';
+  newPriority: '' | PrioKey = '';
   newColor = '';
-  newRepeat = '';
+  newRepeat: '' | RepeatKey = '';
   newLink = '';
   newStartDate = '';
   newProject = '';
 
-  categories = ['Jobb', 'Hjem', 'Skole', 'Trening', 'Helse'];
-  priorities = ['Lav', 'Middels', 'Høy'];
-  repeats = ['Daglig', 'Ukentlig', 'Annenhver uke'];
+  /** Verdier som NØKLER (språk-uavhengig) */
+  categories: CatKey[] = ['WORK', 'HOME', 'SCHOOL', 'TRAINING', 'HEALTH'];
+  priorities: PrioKey[] = ['LOW', 'MEDIUM', 'HIGH'];
+  repeats: RepeatKey[] = ['DAILY', 'WEEKLY', 'BIWEEKLY'];
 
-  // ----------------------------------------
-  // 🟩 Applikasjonsstatus
-  // ----------------------------------------
+  // ---------------------------
+  // 🟩 App-state
+  // ---------------------------
   tasks: Task[] = [];
   filter: Filter = 'all';
   sortBy: string = 'date';
@@ -48,10 +59,10 @@ export class Todo {
   showAllActive = false;
   showAllCompleted = false;
 
-  // ----------------------------------------
-  // 🟩 Språk og oversettelse
-  // ----------------------------------------
-  supportedLanguages = SUPPORTED_LANGUAGES; // typed via 'as const'
+  // ---------------------------
+  // 🟩 Språk
+  // ---------------------------
+  supportedLanguages = SUPPORTED_LANGUAGES;
   lang: Lang = 'nb';
 
   constructor(private store: TodoStore, private translate: TranslateService) {
@@ -71,17 +82,22 @@ export class Todo {
     localStorage.setItem('lang', code);
   }
 
-  // ----------------------------------------
-  // 🟩 Oppgavehandlinger
-  // ----------------------------------------
+  // ---------------------------
+  // 🟩 Handlinger
+  // ---------------------------
   addTask(): void {
     const t = this.newTask.trim();
     if (!t) return;
 
-    const category =
-      this.newCategory === 'custom' ? this.customCategory.trim() : this.newCategory || '';
+    // lagre nøkkel (CatKey) hvis valgt, ellers fritekst fra custom
+    let category = '';
+    if (this.newCategory === 'custom' || this.newCategory === '') {
+      category = this.customCategory.trim() || '';
+    } else {
+      category = this.newCategory; // WORK/HOME/...
+    }
 
-    this.tasks.unshift({
+    const task: Task = {
       id: Date.now(),
       text: t,
       done: false,
@@ -91,13 +107,14 @@ export class Todo {
       endTime: this.newEndTime,
       category,
       note: this.newNote,
-      priority: this.newPriority,
-      repeat: this.newRepeat,
+      priority: this.newPriority || '',
+      repeat: this.newRepeat || '',
       link: this.newLink,
       color: this.newColor,
       project: this.newProject,
-    });
+    };
 
+    this.tasks.unshift(task);
     this.resetFields();
     this.persist();
   }
@@ -118,9 +135,9 @@ export class Todo {
     this.persist();
   }
 
-  // ----------------------------------------
-  // 🟩 UI og visningslogikk
-  // ----------------------------------------
+  // ---------------------------
+  // 🟩 Visningslogikk
+  // ---------------------------
   toggleForm(): void {
     this.showForm = !this.showForm;
   }
@@ -141,7 +158,8 @@ export class Todo {
     } else if (this.sortBy === 'name') {
       list.sort((a, b) => a.text.localeCompare(b.text));
     } else if (this.sortBy === 'category') {
-      list.sort((a, b) => (a.category || '').localeCompare(b.category || ''));
+      // sorter på visningsetikett, ikke råverdi
+      list.sort((a, b) => (this.catLabel(a) || '').localeCompare(this.catLabel(b) || ''));
     }
     return list;
   }
@@ -149,18 +167,42 @@ export class Todo {
   get activeTasks(): Task[] {
     return this.visible.filter((t) => !t.done);
   }
-
   get completedTasks(): Task[] {
     return this.visible.filter((t) => t.done);
   }
 
-  trackById(index: number, t: Task): number {
+  trackById(_index: number, t: Task): number {
     return t.id;
   }
 
-  // ----------------------------------------
-  // 🟩 Persistens og tilbakestilling
-  // ----------------------------------------
+  /** CSS-klasse for farget venstrekant basert på prioritet (støtter både nøkler og gamle fritekster) */
+  priorityClass(t: Task): string {
+    const raw = (t.priority || '').toString().toLowerCase();
+    if (raw === 'high' || raw.includes('høy') || raw.includes('hoy')) return 'prio-high';
+    if (raw === 'medium' || raw.includes('middels') || raw.includes('mid')) return 'prio-mid';
+    if (raw === 'low' || raw.includes('lav')) return 'prio-low';
+    return 'prio-low';
+  }
+
+  /** Label for kategori – bruker i18n-nøkkel hvis det er en CatKey, ellers lagret fritekst */
+  catLabel(t: Task): string {
+    const v = (t.category || '').toString();
+    const key = 'TODO.CAT_' + v.toUpperCase(); // f.eks. TODO.CAT_WORK
+    const tr = this.translate.instant(key);
+    return tr && !tr.startsWith('TODO.CAT_') ? tr : v; // fallback til original tekst
+  }
+
+  /** Label for prioritet – bruker i18n-nøkkel hvis mulig, ellers lagret fritekst */
+  prioLabel(t: Task): string {
+    const v = (t.priority || '').toString();
+    const key = 'TODO.PRIO_' + v.toUpperCase(); // f.eks. TODO.PRIO_HIGH
+    const tr = this.translate.instant(key);
+    return tr && !tr.startsWith('TODO.PRIO_') ? tr : v;
+  }
+
+  // ---------------------------
+  // 🟩 Persistens
+  // ---------------------------
   private persist(): void {
     this.store.set(this.tasks);
   }
@@ -171,14 +213,14 @@ export class Todo {
       this.newDueDate =
       this.newDueTime =
       this.newEndTime =
-      this.newCategory =
       this.customCategory =
       this.newNote =
-      this.newPriority =
-      this.newRepeat =
       this.newLink =
       this.newColor =
       this.newProject =
         '';
+    this.newCategory = ''; // (NewCategory)
+    this.newPriority = ''; // ('' | PrioKey)
+    this.newRepeat = ''; // ('' | RepeatKey)
   }
 }

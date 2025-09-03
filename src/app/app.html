@@ -1,4 +1,3 @@
-<!-- Fil: src/app/app.html -->
 <body class="relative min-h-screen overflow-x-hidden bg-slate-900">
   <!-- Glow bakgrunn -->
   <div
@@ -9,68 +8,72 @@
   ></div>
 
   <div class="relative z-10 flex flex-col items-center justify-center min-h-screen p-6 font-sans">
+    <!-- STARTSKJERM: spør om navn -->
     <ng-container *ngIf="!hasName; else content">
       <div class="flex items-center justify-center w-full h-full">
-        <div class="relative w-full max-w-md space-y-4 text-center card animate-fade-in">
-          <!-- Språkvelger (øverst til høyre i kortet) -->
-          <div class="absolute flex gap-2 right-4 top-4">
-            <img
-              *ngFor="let langObj of supportedLanguages"
-              [src]="'assets/images/icons/' + langObj.code + '.png'"
-              [alt]="langObj.label"
-              class="w-6 h-6 transition-transform rounded cursor-pointer hover:scale-110"
-              (click)="changeLang(langObj.code)"
-              [class.opacity-40]="langObj.code !== lang"
-              title="{{ langObj.label }}"
-            />
-          </div>
-
-          <!-- Logo på forsiden -->
-          <img src="assets/images/ToDo-logo.png" alt="App logo" class="w-24 h-auto mx-auto mb-4" />
-
+        <div class="relative w-full max-w-md space-y-4 text-center card card-fixed animate-fade-in">
+          <!-- Logo / tittel -->
+          <img src="assets/images/ToDo-logo.png" alt="App logo" class="w-24 h-auto mx-auto mb-1" />
           <h1 class="text-3xl font-bold text-green-300">{{ 'APP.ASK_NAME' | translate }}</h1>
           <p class="text-sm text-white/70">{{ 'APP.TAGLINE' | translate }}</p>
 
+          <!-- Språkvelger inline (under intro-tekst) -->
+          <div class="lang-scroll">
+            <div class="lang-inline">
+              <img
+                *ngFor="let langObj of supportedLanguages"
+                [src]="'assets/images/icons/' + langObj.code + '.png'"
+                [alt]="langObj.label"
+                class="lang-flag"
+                [class.inactive]="langObj.code !== lang"
+                (click)="changeLang(langObj.code)"
+                [title]="langObj.label"
+              />
+            </div>
+          </div>
+
+          <!-- Navn + knapp -->
           <input
             [(ngModel)]="tempName"
-            class="w-full input"
+            class="input field-h"
             [placeholder]="'APP.PLACEHOLDER_NAME' | translate"
           />
-          <button (click)="saveName()" class="w-full btn btn-primary">
+          <button (click)="saveName()" class="w-full btn btn-primary btn-fixed">
             {{ 'APP.CONTINUE' | translate }}
           </button>
         </div>
       </div>
     </ng-container>
 
+    <!-- HOVEDINNHOLD -->
     <ng-template #content>
       <ng-container *ngIf="isEasterEgg; else todo">
         <app-easter-egg></app-easter-egg>
       </ng-container>
 
       <ng-template #todo>
-        <header class="mb-10 text-center animate-fade-in">
-          <!-- Toppstripe med språkvelger -->
-          <div class="flex items-center justify-end gap-2 mb-3">
-            <img
-              *ngFor="let langObj of supportedLanguages"
-              [src]="'assets/images/icons/' + langObj.code + '.png'"
-              [alt]="langObj.label"
-              class="w-6 h-6 transition-transform rounded cursor-pointer hover:scale-110"
-              (click)="changeLang(langObj.code)"
-              [class.opacity-40]="langObj.code !== lang"
-              title="{{ langObj.label }}"
-            />
-          </div>
-
-          <!-- Logo over tittel på appen -->
-          <img src="assets/images/ToDo-logo.png" alt="App logo" class="w-20 h-auto mx-auto mb-4" />
-
+        <header class="mb-6 text-center animate-fade-in">
+          <img src="assets/images/ToDo-logo.png" alt="App logo" class="w-20 h-auto mx-auto mb-3" />
           <h1 class="text-4xl font-bold text-green-300">
             {{ 'APP.GREETING' | translate : { name: name } }}
           </h1>
           <p class="mt-2 text-white/70">{{ 'APP.TAGLINE' | translate }}</p>
         </header>
+
+        <!-- Språkvelger inline mellom intro og todo-kort -->
+        <div class="mb-6 lang-scroll">
+          <div class="lang-inline">
+            <img
+              *ngFor="let langObj of supportedLanguages"
+              [src]="'assets/images/icons/' + langObj.code + '.png'"
+              [alt]="langObj.label"
+              class="lang-flag"
+              [class.inactive]="langObj.code !== lang"
+              (click)="changeLang(langObj.code)"
+              [title]="langObj.label"
+            />
+          </div>
+        </div>
 
         <app-todo></app-todo>
 

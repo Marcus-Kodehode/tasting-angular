@@ -55,7 +55,23 @@
     "ACTIVE_TITLE": "進行中",
     "COMPLETED_TITLE": "已完成",
     "SHOW_MORE": "顯示更多",
-    "SHOW_LESS": "顯示更少"
+    "SHOW_LESS": "顯示更少",
+
+    "CAT_WORK": "工作",
+    "CAT_HOME": "家庭",
+    "CAT_SCHOOL": "學校",
+    "CAT_TRAINING": "訓練",
+    "CAT_HEALTH": "健康",
+
+    "PRIO_LOW": "低",
+    "PRIO_MEDIUM": "中",
+    "PRIO_HIGH": "高",
+
+    "REP_DAILY": "每天",
+    "REP_WEEKLY": "每週",
+    "REP_BIWEEKLY": "每兩週",
+
+    "LINK": "連結"
   },
 
   "LANG": {

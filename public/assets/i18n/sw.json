@@ -55,7 +55,23 @@
     "ACTIVE_TITLE": "Yanayoendelea",
     "COMPLETED_TITLE": "Yaliyokamilika",
     "SHOW_MORE": "Onyesha zaidi",
-    "SHOW_LESS": "Onyesha kidogo"
+    "SHOW_LESS": "Onyesha kidogo",
+
+    "CAT_WORK": "Kazi",
+    "CAT_HOME": "Nyumbani",
+    "CAT_SCHOOL": "Shule",
+    "CAT_TRAINING": "Mafunzo",
+    "CAT_HEALTH": "Afya",
+
+    "PRIO_LOW": "Chini",
+    "PRIO_MEDIUM": "Wastani",
+    "PRIO_HIGH": "Juu",
+
+    "REP_DAILY": "Kila siku",
+    "REP_WEEKLY": "Kila wiki",
+    "REP_BIWEEKLY": "Kila wiki mbili",
+
+    "LINK": "Kiungo"
   },
 
   "LANG": {

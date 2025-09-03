@@ -55,7 +55,23 @@
     "ACTIVE_TITLE": "Aktif",
     "COMPLETED_TITLE": "Tamamlananlar",
     "SHOW_MORE": "Daha fazla göster",
-    "SHOW_LESS": "Daha az göster"
+    "SHOW_LESS": "Daha az göster",
+
+    "CAT_WORK": "İş",
+    "CAT_HOME": "Ev",
+    "CAT_SCHOOL": "Okul",
+    "CAT_TRAINING": "Antrenman",
+    "CAT_HEALTH": "Sağlık",
+
+    "PRIO_LOW": "Düşük",
+    "PRIO_MEDIUM": "Orta",
+    "PRIO_HIGH": "Yüksek",
+
+    "REP_DAILY": "Günlük",
+    "REP_WEEKLY": "Haftalık",
+    "REP_BIWEEKLY": "İki haftada bir",
+
+    "LINK": "Bağlantı"
   },
 
   "LANG": {

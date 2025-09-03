@@ -51,11 +51,32 @@
     "MARK_DONE": "✅ Done",
     "MARK_ACTIVE": "↩️ Reactivate",
     "MARK_ALL_DONE": "✅ Complete all tasks",
+    "CLEAR_COMPLETED": "Clear completed",
 
     "ACTIVE_TITLE": "Active",
     "COMPLETED_TITLE": "Completed",
     "SHOW_MORE": "Show more",
-    "SHOW_LESS": "Show less"
+    "SHOW_LESS": "Show less",
+
+    "CAT_WORK": "Work",
+    "CAT_HOME": "Home",
+    "CAT_SCHOOL": "School",
+    "CAT_TRAINING": "Workout",
+    "CAT_HEALTH": "Health",
+
+    "PRIO_LOW": "Low",
+    "PRIO_MEDIUM": "Medium",
+    "PRIO_HIGH": "High",
+
+    "REPEAT_DAILY": "Daily",
+    "REPEAT_WEEKLY": "Weekly",
+    "REPEAT_BIWEEKLY": "Every other week",
+
+    "META_START": "Start",
+    "META_DATE": "Date",
+    "META_TIME": "Time",
+
+    "LINK": "Link"
   },
 
   "LANG": {

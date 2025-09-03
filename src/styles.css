@@ -1,19 +1,11 @@
 /* Fil: src/styles.css
-   Kort fortalt: behold fargene, fjern scroll-lock, rene komponentklasser. */
+   Beholder fargestil. Ryddige, gjenbrukbare utilities. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ---- Grunnoppsett (IKKE lås scroll) ------------------------------- */
-/* html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-} */
-
-/* ---- Egne, gjenbrukbare komponentklasser -------------------------- */
 @layer utilities {
-  /* Animasjon – respekterer redusert bevegelse */
+  /* Anim – respekter redusert bevegelse */
   .animate-fade-in {
     animation: fadeIn 0.9s ease-out both;
   }
@@ -29,23 +21,38 @@
     }
     100% {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
     }
   }
 
-  /* Diskré grønn glød for CTA */
+  /* Diskré grønn glød */
   .glow {
     @apply drop-shadow-xl;
     box-shadow: 0 0 15px rgba(52, 211, 153, 0.55);
   }
 
-  /* Kort (glassmorphism-aktig) */
+  /* Kort (glass) */
   .card {
     @apply p-6 text-white border shadow-2xl rounded-2xl border-white/20 bg-white/10;
     backdrop-filter: blur(8px);
   }
 
-  /* Knapper – konsistent fokus og disabled-støtte */
+  /* Stabil minimumshøyde for kortet (hindrer hopp ved språkbytte) */
+  .card-fixed {
+    min-height: 520px;
+  }
+  @media (min-width: 640px) {
+    .card-fixed {
+      min-height: 560px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .card-fixed {
+      min-height: 600px;
+    }
+  }
+
+  /* Knapper */
   .btn {
     @apply inline-flex items-center justify-center px-5 py-2 font-semibold transition-all duration-200 rounded-full;
   }
@@ -55,15 +62,17 @@
   .btn:disabled {
     @apply cursor-not-allowed opacity-60;
   }
-
   .btn-primary {
     @apply text-white bg-green-400 hover:bg-green-300 active:scale-[0.98];
   }
   .btn-danger {
-    @apply text-white bg-red-500 hover:bg-red-400 active:scale-[0.98];
+    @apply text-white bg-red-500   hover:bg-red-400   active:scale-[0.98];
   }
+  .btn-fixed {
+    @apply px-4 h-11;
+  } /* lås høyde */
 
-  /* Inputs – mørk, tydelig fokus, lik høyde som knapper */
+  /* Inputs */
   .input {
     @apply w-full px-3 py-2 text-white transition-colors duration-200 border rounded border-white/40 bg-white/20;
   }
@@ -76,44 +85,41 @@
   .input:disabled {
     @apply cursor-not-allowed opacity-60;
   }
-
-  /* Inputs – inkluderer select og textarea */
-  .input {
-    @apply w-full px-3 py-2 text-white transition-colors duration-200 border rounded border-white/40 bg-white/20;
+  .field-h {
+    @apply h-11;
+  } /* samme høyde som knapper */
+  .select-nowrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .input::placeholder {
-    @apply text-white/60;
-  }
-  .input:focus-visible {
-    @apply outline-none ring-2 ring-green-300;
-  }
-  .input:disabled {
-    @apply cursor-not-allowed opacity-60;
-  }
-
-  /* Select spesifikt: dropdown-lista */
   select.input {
-    appearance: none; /* fjerner default OS-stil */
-    background-color: rgba(255, 255, 255, 0.1); /* samme bakgrunn som inputs */
+    appearance: none;
+    background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
+  }
+  select.input option {
+    background-color: #1f2937;
+    color: #fff;
+  } /* gray-800 */
+  .textarea-fixed {
+    min-height: 96px;
+    max-height: 160px;
   }
 
-  /* Options: bakgrunn og tekst */
-  select.input option {
-    background-color: #1f2937; /* mørk grå (tailwind gray-800) */
-    color: #fff;
+  /* Grid til skjema */
+  .form-grid {
+    @apply grid gap-4;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
   }
-  /* Små “chips” for metadata */
+
+  /* Små komponenter */
   .tag {
     @apply inline-flex items-center px-2 py-1 text-xs text-white rounded-full bg-white/30;
   }
-
-  /* Til små, ensartede feltheader-etiketter (valgfritt) */
   .form-label {
     @apply mb-1 text-xs tracking-wide uppercase text-white/60;
   }
-
-  /* Skjermleser-hjelp (tilgjengelighet) */
   .sr-only {
     position: absolute;
     width: 1px;
@@ -125,18 +131,89 @@
     white-space: nowrap;
     border: 0;
   }
+
+  /* Kontrollrekke (sortering etc.) */
+  .control-row {
+    @apply flex flex-wrap items-center justify-end gap-2;
+  }
+  .btn-link {
+    @apply inline-flex items-center px-2 py-1 text-xs font-semibold text-green-300 rounded hover:text-green-200 hover:underline whitespace-nowrap;
+    background: transparent;
+  }
+  .minw-ctrl {
+    min-width: 8rem;
+  } /* ~128px */
+
+  /* Språkvelger inline (ikke fixed) */
+  .lang-inline {
+    @apply inline-flex items-center gap-2 px-3 py-1 mx-auto mt-3 border rounded-full shadow-lg bg-white/10 backdrop-blur border-white/20;
+  }
+  .lang-flag {
+    @apply w-6 h-6 transition-transform rounded cursor-pointer;
+  }
+  .lang-flag:hover {
+    transform: scale(1.1);
+  }
+  .lang-flag.inactive {
+    @apply opacity-40;
+  }
+  .lang-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .lang-scroll::-webkit-scrollbar {
+    display: none;
+  }
   @layer utilities {
-  /* Fast, ryddig minimumshøyde for todo-kortet */
-  .card-fixed {
-    min-height: 520px;      /* mobil / smale skjermer */
+    /* Kort-linje til venstre som kodes etter prioritet */
+    .task {
+      @apply p-3 border rounded bg-white/5 border-white/10;
+    }
+    .task:hover {
+      @apply bg-white/10;
+    }
+
+    .prio-low {
+      @apply border-l-4 border-green-400;
+    }
+    .prio-mid {
+      @apply border-l-4 border-yellow-400;
+    }
+    .prio-high {
+      @apply border-l-4 border-red-500;
+    }
+
+    /* Chips-rad under tittelen */
+    .meta-row {
+      @apply flex flex-wrap items-center gap-2 mt-1 text-xs;
+    }
+
+    /* Lenke-chip */
+    .chip-link {
+      @apply inline-flex items-center gap-1 px-2 py-1 text-white rounded-full bg-white/20;
+    }
+    .chip-link:hover {
+      @apply bg-white/30;
+    }
+
+    /* Notatboks */
+    .note-box {
+      @apply p-2 mt-2 text-sm rounded bg-white/10 text-white/90;
+    }
   }
-  @media (min-width: 640px) {
-    .card-fixed { min-height: 560px; }  /* sm */
+  /* Unngå “nested scroll” – la kun body scrolle */
+  html,
+  body {
+    min-height: 100%;
+    height: auto;
+    overflow-y: auto;
   }
-  @media (min-width: 1024px) {
-    .card-fixed { min-height: 600px; }  /* lg */
+
+  /* Bruk denne klassen på hoved-wrapperen i app.html */
+  .app-page {
+    min-height: 100dvh;
+    overflow: visible;
   }
-}
 }
 
 /* -------------------- Sammendrag --------------------

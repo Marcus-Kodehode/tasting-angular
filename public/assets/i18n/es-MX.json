@@ -4,7 +4,7 @@
     "PLACEHOLDER_NAME": "Escribe tu nombre",
     "CONTINUE": "🚀 Continuar",
     "GREETING": "Hola, {{name}} 👋",
-    "TAGLINE": "Tu lista personal de tareas en polvo de estrellas",
+    "TAGLINE": "Tu lista de tareas personal en el polvo de estrellas",
     "FOOTER": "Hecho con ❤️ y Tailwind"
   },
 
@@ -20,22 +20,22 @@
     "SHOW_FORM": "Mostrar formulario",
 
     "LABEL_TASK": "¿Qué hay que hacer?",
-    "PLACEHOLDER_TASK": "Escribe la tarea…",
+    "PLACEHOLDER_TASK": "Escribe tu tarea…",
 
     "LABEL_STARTDATE": "Fecha de inicio",
-    "LABEL_DUEDATE": "Fecha de entrega",
+    "LABEL_DUEDATE": "Fecha de vencimiento",
     "LABEL_DUETIME": "Hora de inicio",
     "LABEL_ENDTIME": "Hora de fin",
 
     "LABEL_CATEGORY": "Categoría",
-    "OPT_CATEGORY": "Elige una categoría",
+    "OPT_CATEGORY": "Elige categoría",
     "OPT_CATEGORY_CUSTOM": "Personalizada…",
 
     "LABEL_PRIORITY": "Prioridad",
-    "OPT_PRIORITY": "Elige la prioridad",
+    "OPT_PRIORITY": "Elige prioridad",
 
-    "LABEL_REPEAT": "Repetición",
-    "OPT_REPEAT": "Elige la repetición",
+    "LABEL_REPEAT": "Repetir",
+    "OPT_REPEAT": "Elige repetición",
 
     "LABEL_LINK": "Enlace (opcional)",
     "PLACEHOLDER_LINK": "https:// …",
@@ -44,18 +44,34 @@
     "PLACEHOLDER_PROJECT": "Nombre del proyecto",
 
     "LABEL_NOTE": "Nota / descripción",
-    "PLACEHOLDER_NOTE": "Descripción corta…",
+    "PLACEHOLDER_NOTE": "Breve descripción …",
 
     "ADD_BUTTON": "➕ Agregar",
     "REMOVE": "❌ Eliminar",
-    "MARK_DONE": "✅ Listo",
-    "MARK_ACTIVE": "↩️ Reactivar",
-    "MARK_ALL_DONE": "✅ Completar todas las tareas",
+    "MARK_DONE": "✅ Terminado",
+    "MARK_ACTIVE": "↩️ Reabrir",
+    "MARK_ALL_DONE": "✅ Completar todas",
 
     "ACTIVE_TITLE": "Activas",
     "COMPLETED_TITLE": "Completadas",
     "SHOW_MORE": "Ver más",
-    "SHOW_LESS": "Ver menos"
+    "SHOW_LESS": "Ver menos",
+
+    "CAT_WORK": "Trabajo",
+    "CAT_HOME": "Hogar",
+    "CAT_SCHOOL": "Escuela",
+    "CAT_TRAINING": "Entrenamiento",
+    "CAT_HEALTH": "Salud",
+
+    "PRIO_LOW": "Baja",
+    "PRIO_MEDIUM": "Media",
+    "PRIO_HIGH": "Alta",
+
+    "REP_DAILY": "Diaria",
+    "REP_WEEKLY": "Semanal",
+    "REP_BIWEEKLY": "Cada dos semanas",
+
+    "LINK": "Enlace"
   },
 
   "LANG": {

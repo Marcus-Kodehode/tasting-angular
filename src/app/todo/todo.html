@@ -1,135 +1,172 @@
-<!-- Fil: src/app/todo/todo.html -->
-
 <div class="max-w-4xl mx-auto card card-fixed animate-fade-in">
-  <!-- Topp: Tittel og språkvelger -->
+  <!-- Topp: Tittel og kontrollrekke -->
   <div class="flex flex-col justify-between gap-4 mb-6 sm:flex-row sm:items-center">
     <h2 class="text-2xl font-bold text-green-300">📝 {{ 'TODO.TITLE' | translate }}</h2>
 
-    <!-- Språkvelger med flagg -->
-    <div class="flex gap-2">
-      <img
-        *ngFor="let langObj of supportedLanguages"
-        [src]="'/assets/images/icons/' + langObj.code + '.png'"
-        [alt]="langObj.label"
-        class="w-6 h-6 transition-transform rounded cursor-pointer hover:scale-110"
-        (click)="changeLang(langObj.code)"
-        [class.opacity-40]="langObj.code !== lang"
-      />
+    <div class="control-row">
+      <label class="text-white">{{ 'TODO.SORT_BY' | translate }}</label>
+      <select [(ngModel)]="sortBy" class="input field-h select-nowrap minw-ctrl">
+        <option value="date">{{ 'TODO.SORT_DATE' | translate }}</option>
+        <option value="name">{{ 'TODO.SORT_NAME' | translate }}</option>
+        <option value="category">{{ 'TODO.SORT_CATEGORY' | translate }}</option>
+      </select>
+
+      <button (click)="toggleForm()" class="btn-link">
+        {{ showForm ? ('TODO.HIDE_FORM' | translate) : ('TODO.SHOW_FORM' | translate) }}
+      </button>
+
+      <button
+        *ngIf="anyDone"
+        (click)="clearCompleted()"
+        class="btn btn-danger btn-fixed select-nowrap"
+      >
+        {{ 'TODO.CLEAR_COMPLETED' | translate }}
+      </button>
     </div>
   </div>
 
-  <!-- Sortering og form toggle -->
-  <div class="flex justify-end gap-3 mb-4">
-    <label class="text-white">{{ 'TODO.SORT_BY' | translate }}</label>
-    <select [(ngModel)]="sortBy" class="px-2 py-1 text-white rounded bg-slate-800">
-      <option value="date">{{ 'TODO.SORT_DATE' | translate }}</option>
-      <option value="name">{{ 'TODO.SORT_NAME' | translate }}</option>
-      <option value="category">{{ 'TODO.SORT_CATEGORY' | translate }}</option>
-    </select>
-    <button (click)="toggleForm()" class="text-xs text-green-300 hover:underline">
-      {{ showForm ? ('TODO.HIDE_FORM' | translate) : ('TODO.SHOW_FORM' | translate) }}
-    </button>
-  </div>
-
-  <!-- Ny oppgave skjema -->
+  <!-- Skjema -->
   <form *ngIf="showForm" (ngSubmit)="addTask()" class="mb-6 space-y-4">
     <div>
-      <label class="block text-xs text-white/60">{{ 'TODO.LABEL_TASK' | translate }}</label>
+      <label class="form-label">{{ 'TODO.LABEL_TASK' | translate }}</label>
       <input
         [(ngModel)]="newTask"
         name="task"
-        class="w-full input"
-        placeholder="{{ 'TODO.PLACEHOLDER_TASK' | translate }}"
+        class="input field-h"
+        [placeholder]="'TODO.PLACEHOLDER_TASK' | translate"
       />
     </div>
 
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <div>
-        <label class="block text-xs text-white/60">{{ 'TODO.LABEL_DUEDATE' | translate }}</label>
-        <input [(ngModel)]="newDueDate" name="dueDate" type="date" class="w-full input" />
+    <div class="form-grid">
+      <div class="col-span-12 sm:col-span-6 lg:col-span-3">
+        <label class="form-label">{{ 'TODO.LABEL_DUEDATE' | translate }}</label>
+        <input [(ngModel)]="newDueDate" name="dueDate" type="date" class="input field-h" />
       </div>
-      <div>
-        <label class="block text-xs text-white/60">{{ 'TODO.LABEL_DUETIME' | translate }}</label>
-        <input [(ngModel)]="newDueTime" name="dueTime" type="time" class="w-full input" />
+
+      <div class="col-span-12 sm:col-span-6 lg:col-span-3">
+        <label class="form-label">{{ 'TODO.LABEL_DUETIME' | translate }}</label>
+        <input [(ngModel)]="newDueTime" name="dueTime" type="time" class="input field-h" />
       </div>
-      <div>
-        <label class="block text-xs text-white/60">{{ 'TODO.LABEL_CATEGORY' | translate }}</label>
-        <select [(ngModel)]="newCategory" name="category" class="w-full input">
+
+      <div class="col-span-12 sm:col-span-6 lg:col-span-3">
+        <label class="form-label">{{ 'TODO.LABEL_CATEGORY' | translate }}</label>
+        <select [(ngModel)]="newCategory" name="category" class="input field-h select-nowrap">
           <option value="" disabled>{{ 'TODO.OPT_CATEGORY' | translate }}</option>
-          <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+          <option *ngFor="let c of categories" [value]="c">
+            {{ 'TODO.CAT_' + c | translate }}
+          </option>
           <option value="custom">{{ 'TODO.OPT_CATEGORY_CUSTOM' | translate }}</option>
         </select>
       </div>
-      <div>
-        <label class="block text-xs text-white/60">{{ 'TODO.LABEL_PRIORITY' | translate }}</label>
-        <select [(ngModel)]="newPriority" name="priority" class="w-full input">
+
+      <div class="col-span-12 sm:col-span-6 lg:col-span-3">
+        <label class="form-label">{{ 'TODO.LABEL_PRIORITY' | translate }}</label>
+        <select [(ngModel)]="newPriority" name="priority" class="input field-h select-nowrap">
           <option value="" disabled>{{ 'TODO.OPT_PRIORITY' | translate }}</option>
-          <option *ngFor="let p of priorities" [value]="p">{{ p }}</option>
+          <option *ngFor="let p of priorities" [value]="p">
+            {{ 'TODO.PRIO_' + p | translate }}
+          </option>
         </select>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      <div>
-        <label class="block text-xs text-white/60">{{ 'TODO.LABEL_LINK' | translate }}</label>
+    <div class="form-grid">
+      <div class="col-span-12 lg:col-span-6">
+        <label class="form-label">{{ 'TODO.LABEL_LINK' | translate }}</label>
         <input
           [(ngModel)]="newLink"
           name="link"
-          class="w-full input"
-          placeholder="{{ 'TODO.PLACEHOLDER_LINK' | translate }}"
+          class="input field-h select-nowrap"
+          [placeholder]="'TODO.PLACEHOLDER_LINK' | translate"
         />
       </div>
-      <div>
-        <label class="block text-xs text-white/60">{{ 'TODO.LABEL_NOTE' | translate }}</label>
+      <div class="col-span-12 lg:col-span-6">
+        <label class="form-label">{{ 'TODO.LABEL_NOTE' | translate }}</label>
         <textarea
           [(ngModel)]="newNote"
           name="note"
-          rows="2"
-          class="w-full input"
-          placeholder="{{ 'TODO.PLACEHOLDER_NOTE' | translate }}"
+          class="input textarea-fixed"
+          [placeholder]="'TODO.PLACEHOLDER_NOTE' | translate"
         ></textarea>
       </div>
     </div>
 
-    <button type="submit" class="w-full btn btn-primary">
+    <button type="submit" class="w-full btn btn-primary btn-fixed">
       {{ 'TODO.ADD_BUTTON' | translate }}
     </button>
   </form>
 
-  <!-- Aktive og fullførte oppgaver -->
+  <!-- Lister -->
   <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+    <!-- Aktive -->
     <div>
       <h3 class="mb-2 text-lg font-semibold text-green-300">
         {{ 'TODO.ACTIVE_TITLE' | translate }}
       </h3>
       <ul class="space-y-3">
         <li
-          *ngFor="let t of activeTasks | slice : 0 : (showAllActive ? activeTasks.length : 3)"
-          class="p-3 border-l-4 rounded"
-          [ngStyle]="{ borderLeftColor: t.color || '#4ade80' }"
+          *ngFor="
+            let t of activeTasks | slice : 0 : (showAllActive ? activeTasks.length : 3);
+            trackBy: trackById
+          "
+          class="task"
+          [ngClass]="priorityClass(t)"
         >
-          <div class="flex items-center justify-between">
-            <span>{{ t.text }}</span>
-            <div class="space-x-2">
-              <button (click)="toggle(t)" class="btn btn-sm">
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <div class="flex items-center gap-2">
+                <span class="font-medium truncate">{{ t.text }}</span>
+                <span *ngIf="t.category" class="tag select-nowrap">{{ catLabel(t) }}</span>
+              </div>
+
+              <div class="meta-row text-white/80">
+                <span *ngIf="t.startDate" class="tag"
+                  >{{ 'TODO.META_START' | translate }}: {{ t.startDate }}</span
+                >
+                <span *ngIf="t.dueDate" class="tag"
+                  >{{ 'TODO.SORT_DATE' | translate }}: {{ t.dueDate }}</span
+                >
+                <span *ngIf="t.dueTime" class="tag"
+                  >{{ 'TODO.META_TIME' | translate }}: {{ t.dueTime }}</span
+                >
+                <span *ngIf="t.priority" class="tag"
+                  >{{ 'TODO.LABEL_PRIORITY' | translate }}: {{ prioLabel(t) }}</span
+                >
+                <a *ngIf="t.link" class="chip-link" [href]="t.link" target="_blank" rel="noopener"
+                  >🔗 {{ 'TODO.LINK' | translate }}</a
+                >
+                <span *ngIf="t.project" class="tag"
+                  >{{ 'TODO.LABEL_PROJECT' | translate }}: {{ t.project }}</span
+                >
+              </div>
+
+              <div *ngIf="t.note" class="note-box">
+                {{ t.note }}
+              </div>
+            </div>
+
+            <div class="flex gap-2 shrink-0">
+              <button (click)="toggle(t)" class="btn btn-fixed select-nowrap">
                 {{ 'TODO.MARK_DONE' | translate }}
               </button>
-              <button (click)="remove(t)" class="btn btn-danger">
+              <button (click)="remove(t)" class="btn btn-danger btn-fixed select-nowrap">
                 {{ 'TODO.REMOVE' | translate }}
               </button>
             </div>
           </div>
         </li>
       </ul>
+
       <button
         *ngIf="activeTasks.length > 3"
         (click)="toggleShowAll('active')"
-        class="mt-2 text-xs text-green-300 hover:underline"
+        class="mt-2 text-xs text-green-300 hover:underline select-nowrap"
       >
         {{ showAllActive ? ('TODO.SHOW_LESS' | translate) : ('TODO.SHOW_MORE' | translate) }}
       </button>
     </div>
 
+    <!-- Ferdige -->
     <div>
       <h3 class="mb-2 text-lg font-semibold text-green-300">
         {{ 'TODO.COMPLETED_TITLE' | translate }}
@@ -137,23 +174,52 @@
       <ul class="space-y-3">
         <li
           *ngFor="
-            let t of completedTasks | slice : 0 : (showAllCompleted ? completedTasks.length : 3)
+            let t of completedTasks | slice : 0 : (showAllCompleted ? completedTasks.length : 3);
+            trackBy: trackById
           "
-          class="p-3 border-l-4 rounded opacity-70"
-          [ngStyle]="{ borderLeftColor: t.color || '#4ade80' }"
+          class="task opacity-80"
+          [ngClass]="priorityClass(t)"
         >
-          <div class="flex items-center justify-between">
-            <span class="line-through">{{ t.text }}</span>
-            <button (click)="toggle(t)" class="btn btn-sm">
-              {{ 'TODO.MARK_ACTIVE' | translate }}
-            </button>
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <div class="flex items-center gap-2">
+                <span class="font-medium line-through truncate">{{ t.text }}</span>
+                <span *ngIf="t.category" class="tag select-nowrap">{{ catLabel(t) }}</span>
+              </div>
+
+              <div class="meta-row text-white/70">
+                <span *ngIf="t.startDate" class="tag"
+                  >{{ 'TODO.META_START' | translate }}: {{ t.startDate }}</span
+                >
+                <span *ngIf="t.dueDate" class="tag"
+                  >{{ 'TODO.SORT_DATE' | translate }}: {{ t.dueDate }}</span
+                >
+                <span *ngIf="t.priority" class="tag"
+                  >{{ 'TODO.LABEL_PRIORITY' | translate }}: {{ prioLabel(t) }}</span
+                >
+                <a *ngIf="t.link" class="chip-link" [href]="t.link" target="_blank" rel="noopener"
+                  >🔗 {{ 'TODO.LINK' | translate }}</a
+                >
+              </div>
+
+              <div *ngIf="t.note" class="note-box text-white/80">
+                {{ t.note }}
+              </div>
+            </div>
+
+            <div class="flex shrink-0">
+              <button (click)="toggle(t)" class="btn btn-fixed select-nowrap">
+                {{ 'TODO.MARK_ACTIVE' | translate }}
+              </button>
+            </div>
           </div>
         </li>
       </ul>
+
       <button
         *ngIf="completedTasks.length > 3"
         (click)="toggleShowAll('completed')"
-        class="mt-2 text-xs text-green-300 hover:underline"
+        class="mt-2 text-xs text-green-300 hover:underline select-nowrap"
       >
         {{ showAllCompleted ? ('TODO.SHOW_LESS' | translate) : ('TODO.SHOW_MORE' | translate) }}
       </button>

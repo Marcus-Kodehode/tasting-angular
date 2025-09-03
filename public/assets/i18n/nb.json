@@ -51,6 +51,7 @@
     "MARK_DONE": "✅ Ferdig",
     "MARK_ACTIVE": "↩️ Aktiver",
     "MARK_ALL_DONE": "✅ Fullfør alle oppgaver",
+    "CLEAR_COMPLETED": "Fjern fullførte",
 
     "ACTIVE_TITLE": "Aktive",
     "COMPLETED_TITLE": "Ferdige",
