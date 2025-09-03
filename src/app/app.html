@@ -11,7 +11,21 @@
   <div class="relative z-10 flex flex-col items-center justify-center min-h-screen p-6 font-sans">
     <ng-container *ngIf="!hasName; else content">
       <div class="flex items-center justify-center w-full h-full">
-        <div class="w-full max-w-md space-y-4 text-center card animate-fade-in">
+        <div class="relative w-full max-w-md space-y-4 text-center card animate-fade-in">
+          <!-- Språkvelger (øverst til høyre i kortet) -->
+          <div class="absolute flex gap-2 right-4 top-4">
+            <img
+              *ngFor="let langObj of supportedLanguages"
+              [src]="'assets/images/icons/' + langObj.code + '.png'"
+              [alt]="langObj.label"
+              class="w-6 h-6 transition-transform rounded cursor-pointer hover:scale-110"
+              (click)="changeLang(langObj.code)"
+              [class.opacity-40]="langObj.code !== lang"
+              title="{{ langObj.label }}"
+            />
+          </div>
+
+          <!-- Logo på forsiden -->
           <img src="assets/images/ToDo-logo.png" alt="App logo" class="w-24 h-auto mx-auto mb-4" />
 
           <h1 class="text-3xl font-bold text-green-300">{{ 'APP.ASK_NAME' | translate }}</h1>
@@ -36,6 +50,20 @@
 
       <ng-template #todo>
         <header class="mb-10 text-center animate-fade-in">
+          <!-- Toppstripe med språkvelger -->
+          <div class="flex items-center justify-end gap-2 mb-3">
+            <img
+              *ngFor="let langObj of supportedLanguages"
+              [src]="'assets/images/icons/' + langObj.code + '.png'"
+              [alt]="langObj.label"
+              class="w-6 h-6 transition-transform rounded cursor-pointer hover:scale-110"
+              (click)="changeLang(langObj.code)"
+              [class.opacity-40]="langObj.code !== lang"
+              title="{{ langObj.label }}"
+            />
+          </div>
+
+          <!-- Logo over tittel på appen -->
           <img src="assets/images/ToDo-logo.png" alt="App logo" class="w-20 h-auto mx-auto mb-4" />
 
           <h1 class="text-4xl font-bold text-green-300">
