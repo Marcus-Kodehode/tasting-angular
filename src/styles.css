@@ -296,6 +296,35 @@
       gap: 0.4rem;
     }
   }
+  /* ---------- One-scroller fix ---------- */
+  /* La kun vinduet scrolle */
+  html,
+  body {
+    height: auto;
+  }
+  body {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* Ytre skall for hele appen – skjær av gløde-bakgrunn (hindrer intern scroll) */
+  .page-shell {
+    min-height: 100svh; /* mer stabil på mobil enn 100vh */
+    overflow: hidden; /* glow -inset-10 skal ikke lage egen scrollbar */
+  }
+
+  /* Hovedinnhold skal ikke ha egen scroll */
+  .main-wrap {
+    min-height: inherit;
+    overflow: visible;
+  }
+
+  /* Pass på at kortet ikke introduserer egen scroll */
+  .card,
+  .card-fixed {
+    overflow: visible;
+    max-height: none;
+  }
 }
 
 /* -------------------- Sammendrag --------------------

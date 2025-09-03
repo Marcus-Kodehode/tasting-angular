@@ -1,16 +1,21 @@
 <!-- File: src/app/app.html -->
-<div class="relative min-h-screen overflow-x-hidden bg-slate-900">
-  <!-- Glow bakgrunn -->
+<div class="relative overflow-hidden page-shell bg-slate-900">
+  <!-- Glow bakgrunn (under alt innhold) -->
   <div
-    class="absolute -inset-10 bg-gradient-to-tr from-cyan-500 via-teal-500 to-blue-500 blur-3xl opacity-40"
+    class="absolute pointer-events-none -inset-10 bg-gradient-to-tr from-cyan-500 via-teal-500 to-blue-500 blur-3xl opacity-40"
   ></div>
   <div
-    class="absolute left-0 inset-y-1/4 w-80 h-80 bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 blur-2xl opacity-30"
+    class="absolute left-0 pointer-events-none inset-y-1/4 w-80 h-80 bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 blur-2xl opacity-30"
   ></div>
-  <div class="relative z-10 flex flex-col items-center justify-center min-h-screen p-6 font-sans">
+
+  <!-- Hovedinnhold -->
+  <div
+    class="main-wrap relative z-10 flex flex-col items-center justify-start min-h-[100svh] p-6 font-sans"
+  >
+    <!-- Startskjerm hvis ikke navn -->
     <ng-container *ngIf="!hasName; else content">
-      <div class="flex items-center justify-center w-full h-full">
-        <div class="relative w-full max-w-md space-y-4 text-center card animate-fade-in">
+      <div class="flex items-center justify-center w-full">
+        <div class="w-full max-w-md space-y-4 text-center card animate-fade-in">
           <!-- Logo -->
           <img src="assets/images/ToDo-logo.png" alt="App logo" class="w-24 h-auto mx-auto mb-4" />
 
@@ -29,37 +34,32 @@
       </div>
     </ng-container>
 
+    <!-- App-innhold når vi har navn -->
     <ng-template #content>
-      <ng-container *ngIf="isEasterEgg; else todo">
-        <app-easter-egg></app-easter-egg>
-      </ng-container>
+      <header class="mb-6 text-center animate-fade-in">
+        <!-- Logo over tittel -->
+        <img src="assets/images/ToDo-logo.png" alt="App logo" class="w-20 h-auto mx-auto mb-4" />
 
-      <ng-template #todo>
-        <header class="mb-10 text-center animate-fade-in">
-          <!-- Logo over tittel -->
-          <img src="assets/images/ToDo-logo.png" alt="App logo" class="w-20 h-auto mx-auto mb-4" />
+        <h1 class="text-4xl font-bold text-green-300">
+          {{ 'APP.GREETING' | translate : { name: name } }}
+        </h1>
+        <p class="mt-2 text-white/70">{{ 'APP.TAGLINE' | translate }}</p>
+      </header>
+      <!-- Global språkvelger – alltid synlig, horisontal og sentrert -->
+      <div class="mx-auto mb-4 lang-switch">
+        <img
+          *ngFor="let langObj of supportedLanguages"
+          [src]="'assets/images/icons/' + langObj.code + '.png'"
+          [alt]="langObj.label"
+          class="lang-flag"
+          (click)="changeLang(langObj.code)"
+          [class.inactive]="langObj.code !== lang"
+          [title]="langObj.label"
+        />
+      </div>
+      <app-todo></app-todo>
 
-          <h1 class="text-4xl font-bold text-green-300">
-            {{ 'APP.GREETING' | translate : { name: name } }}
-          </h1>
-          <p class="mt-2 text-white/70">{{ 'APP.TAGLINE' | translate }}</p>
-        </header>
-        <!-- Global language switcher (fixed) -->
-        <div class="lang-switch">
-          <img
-            *ngFor="let langObj of supportedLanguages"
-            [src]="'assets/images/icons/' + langObj.code + '.png'"
-            [alt]="langObj.label"
-            class="lang-flag"
-            (click)="changeLang(langObj.code)"
-            [class.inactive]="langObj.code !== lang"
-            [title]="langObj.label"
-          />
-        </div>
-        <app-todo></app-todo>
-
-        <footer class="mt-10 text-xs text-white/40">{{ 'APP.FOOTER' | translate }}</footer>
-      </ng-template>
+      <footer class="mt-10 text-xs text-white/40">{{ 'APP.FOOTER' | translate }}</footer>
     </ng-template>
   </div>
 </div>

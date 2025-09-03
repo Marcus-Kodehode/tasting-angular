@@ -14,14 +14,6 @@
       <button (click)="toggleForm()" class="btn-link">
         {{ showForm ? ('TODO.HIDE_FORM' | translate) : ('TODO.SHOW_FORM' | translate) }}
       </button>
-
-      <button
-        *ngIf="anyDone"
-        (click)="clearCompleted()"
-        class="btn btn-danger btn-fixed select-nowrap"
-      >
-        {{ 'TODO.CLEAR_COMPLETED' | translate }}
-      </button>
     </div>
   </div>
 
@@ -95,7 +87,9 @@
       {{ 'TODO.ADD_BUTTON' | translate }}
     </button>
   </form>
-
+  <button *ngIf="anyDone" (click)="clearCompleted()" class="btn btn-danger btn-fixed select-nowrap">
+    {{ 'TODO.CLEAR_COMPLETED' | translate }}
+  </button>
   <!-- Lister -->
   <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
     <!-- Aktive -->
