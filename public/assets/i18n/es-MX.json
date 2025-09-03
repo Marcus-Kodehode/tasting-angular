@@ -1,0 +1,69 @@
+{
+  "APP": {
+    "ASK_NAME": "¿Cómo te llamas?",
+    "PLACEHOLDER_NAME": "Escribe tu nombre",
+    "CONTINUE": "🚀 Continuar",
+    "GREETING": "Hola, {{name}} 👋",
+    "TAGLINE": "Tu lista personal de tareas en polvo de estrellas",
+    "FOOTER": "Hecho con ❤️ y Tailwind"
+  },
+
+  "TODO": {
+    "TITLE": "Mi lista de tareas",
+
+    "SORT_BY": "Ordenar por:",
+    "SORT_DATE": "Fecha",
+    "SORT_NAME": "Nombre",
+    "SORT_CATEGORY": "Categoría",
+
+    "HIDE_FORM": "Ocultar formulario",
+    "SHOW_FORM": "Mostrar formulario",
+
+    "LABEL_TASK": "¿Qué hay que hacer?",
+    "PLACEHOLDER_TASK": "Escribe la tarea…",
+
+    "LABEL_STARTDATE": "Fecha de inicio",
+    "LABEL_DUEDATE": "Fecha de entrega",
+    "LABEL_DUETIME": "Hora de inicio",
+    "LABEL_ENDTIME": "Hora de fin",
+
+    "LABEL_CATEGORY": "Categoría",
+    "OPT_CATEGORY": "Elige una categoría",
+    "OPT_CATEGORY_CUSTOM": "Personalizada…",
+
+    "LABEL_PRIORITY": "Prioridad",
+    "OPT_PRIORITY": "Elige la prioridad",
+
+    "LABEL_REPEAT": "Repetición",
+    "OPT_REPEAT": "Elige la repetición",
+
+    "LABEL_LINK": "Enlace (opcional)",
+    "PLACEHOLDER_LINK": "https:// …",
+
+    "LABEL_PROJECT": "Proyecto",
+    "PLACEHOLDER_PROJECT": "Nombre del proyecto",
+
+    "LABEL_NOTE": "Nota / descripción",
+    "PLACEHOLDER_NOTE": "Descripción corta…",
+
+    "ADD_BUTTON": "➕ Agregar",
+    "REMOVE": "❌ Eliminar",
+    "MARK_DONE": "✅ Listo",
+    "MARK_ACTIVE": "↩️ Reactivar",
+    "MARK_ALL_DONE": "✅ Completar todas las tareas",
+
+    "ACTIVE_TITLE": "Activas",
+    "COMPLETED_TITLE": "Completadas",
+    "SHOW_MORE": "Ver más",
+    "SHOW_LESS": "Ver menos"
+  },
+
+  "LANG": {
+    "nb": "Noruego",
+    "en": "Inglés",
+    "es-MX": "Español (México)",
+    "tr": "Turco",
+    "sw": "Suajili",
+    "zh-Hant": "Chino tradicional"
+  }
+}

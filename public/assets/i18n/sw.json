@@ -1,0 +1,69 @@
+{
+  "APP": {
+    "ASK_NAME": "Jina lako ni nani?",
+    "PLACEHOLDER_NAME": "Andika jina lako",
+    "CONTINUE": "🚀 Endelea",
+    "GREETING": "Habari, {{name}} 👋",
+    "TAGLINE": "Orodha yako binafsi ya majukumu katika vumbi la nyota",
+    "FOOTER": "Imetengenezwa kwa ❤️ na Tailwind"
+  },
+
+  "TODO": {
+    "TITLE": "Orodha yangu ya majukumu",
+
+    "SORT_BY": "Panga kwa:",
+    "SORT_DATE": "Tarehe",
+    "SORT_NAME": "Jina",
+    "SORT_CATEGORY": "Kategoria",
+
+    "HIDE_FORM": "Ficha fomu",
+    "SHOW_FORM": "Onyesha fomu",
+
+    "LABEL_TASK": "Kazi ni ipi?",
+    "PLACEHOLDER_TASK": "Andika jukumu…",
+
+    "LABEL_STARTDATE": "Tarehe ya kuanza",
+    "LABEL_DUEDATE": "Tarehe ya kukamilisha",
+    "LABEL_DUETIME": "Saa ya kuanza",
+    "LABEL_ENDTIME": "Saa ya kumaliza",
+
+    "LABEL_CATEGORY": "Kategoria",
+    "OPT_CATEGORY": "Chagua kategoria",
+    "OPT_CATEGORY_CUSTOM": "Maalum…",
+
+    "LABEL_PRIORITY": "Kipaumbele",
+    "OPT_PRIORITY": "Chagua kipaumbele",
+
+    "LABEL_REPEAT": "Kurudiwa",
+    "OPT_REPEAT": "Chagua kurudiwa",
+
+    "LABEL_LINK": "Kiungo (hiari)",
+    "PLACEHOLDER_LINK": "https:// …",
+
+    "LABEL_PROJECT": "Mradi",
+    "PLACEHOLDER_PROJECT": "Jina la mradi",
+
+    "LABEL_NOTE": "Kumbuka / maelezo",
+    "PLACEHOLDER_NOTE": "Maelezo mafupi…",
+
+    "ADD_BUTTON": "➕ Ongeza",
+    "REMOVE": "❌ Futa",
+    "MARK_DONE": "✅ Imekamilika",
+    "MARK_ACTIVE": "↩️ Rejesha",
+    "MARK_ALL_DONE": "✅ Kamilisha majukumu yote",
+
+    "ACTIVE_TITLE": "Yanayoendelea",
+    "COMPLETED_TITLE": "Yaliyokamilika",
+    "SHOW_MORE": "Onyesha zaidi",
+    "SHOW_LESS": "Onyesha kidogo"
+  },
+
+  "LANG": {
+    "nb": "Kinorwe",
+    "en": "Kiingereza",
+    "es-MX": "Kihispania (Meksiko)",
+    "tr": "Kituruki",
+    "sw": "Kiswahili",
+    "zh-Hant": "Kichina cha jadi"
+  }
+}
