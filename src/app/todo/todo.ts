@@ -13,7 +13,7 @@ type Filter = 'all' | 'active' | 'done';
   standalone: true,
   templateUrl: './todo.html',
   styleUrls: ['./todo.css'],
-  imports: [FormsModule, NgIf, NgForOf, NgStyle, NgClass, SlicePipe, AsyncPipe, TranslateModule],
+  imports: [FormsModule, NgIf, NgForOf, NgStyle, SlicePipe, TranslateModule],
 })
 export class Todo {
   // ----------------------------------------
