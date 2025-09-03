@@ -1,23 +1,24 @@
-// Fil: src/app/todo/todo.ts
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgForOf, NgStyle, NgClass, SlicePipe } from '@angular/common';
+import { NgIf, NgForOf, NgStyle, NgClass, SlicePipe, AsyncPipe } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { TodoStore, Task } from './todo.store';
-import { SUPPORTED_LANGUAGES } from '../i18n';
+import { SUPPORTED_LANGUAGES, Lang } from '../i18n';
 
 type Filter = 'all' | 'active' | 'done';
 
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [FormsModule, NgIf, NgForOf, NgStyle, NgClass, SlicePipe, TranslateModule],
   templateUrl: './todo.html',
-  styleUrl: './todo.css',
+  styleUrls: ['./todo.css'],
+  imports: [FormsModule, NgIf, NgForOf, NgStyle, NgClass, SlicePipe, AsyncPipe, TranslateModule],
 })
 export class Todo {
-  // Inputfelter
+  // ----------------------------------------
+  // 🟩 Inputfelter for ny oppgave
+  // ----------------------------------------
   newTask = '';
   newDueDate = '';
   newDueTime = '';
@@ -36,38 +37,49 @@ export class Todo {
   priorities = ['Lav', 'Middels', 'Høy'];
   repeats = ['Daglig', 'Ukentlig', 'Annenhver uke'];
 
+  // ----------------------------------------
+  // 🟩 Applikasjonsstatus
+  // ----------------------------------------
   tasks: Task[] = [];
   filter: Filter = 'all';
   sortBy: string = 'date';
 
-  // Expanders
   showForm = true;
   showAllActive = false;
   showAllCompleted = false;
 
-  // Språk
-  supportedLanguages = SUPPORTED_LANGUAGES;
-  lang: string;
+  // ----------------------------------------
+  // 🟩 Språk og oversettelse
+  // ----------------------------------------
+  supportedLanguages = SUPPORTED_LANGUAGES; // typed via 'as const'
+  lang: Lang = 'nb';
 
   constructor(private store: TodoStore, private translate: TranslateService) {
     this.tasks = this.store.get();
 
-    // Sett standard språk
+    // Språk: lagret > currentLang > nb
+    const saved =
+      (localStorage.getItem('lang') as Lang) || (this.translate.currentLang as Lang) || 'nb';
     this.translate.setDefaultLang('nb');
-    this.translate.use('nb');
-    this.lang = 'nb';
+    this.translate.use(saved);
+    this.lang = saved;
   }
 
-  changeLang(lang: string): void {
-    this.lang = lang;
-    this.translate.use(lang);
+  changeLang(code: Lang): void {
+    this.lang = code;
+    this.translate.use(code);
+    localStorage.setItem('lang', code);
   }
 
+  // ----------------------------------------
+  // 🟩 Oppgavehandlinger
+  // ----------------------------------------
   addTask(): void {
     const t = this.newTask.trim();
     if (!t) return;
 
-    const category = this.newCategory === 'custom' ? this.customCategory.trim() : this.newCategory;
+    const category =
+      this.newCategory === 'custom' ? this.customCategory.trim() : this.newCategory || '';
 
     this.tasks.unshift({
       id: Date.now(),
@@ -90,23 +102,6 @@ export class Todo {
     this.persist();
   }
 
-  resetFields(): void {
-    this.newTask =
-      this.newStartDate =
-      this.newDueDate =
-      this.newDueTime =
-      this.newEndTime =
-      this.newCategory =
-      this.customCategory =
-      this.newNote =
-      this.newPriority =
-      this.newRepeat =
-      this.newLink =
-      this.newColor =
-      this.newProject =
-        '';
-  }
-
   toggle(task: Task): void {
     task.done = !task.done;
     this.persist();
@@ -117,25 +112,22 @@ export class Todo {
     this.persist();
   }
 
-  markAllDone(): void {
-    this.tasks.forEach((t) => {
-      if (!t.done) t.done = true;
-    });
-
-    this.tasks = this.tasks.filter((t) => !t.done || t.selected);
+  /** Fjern KUN fullførte oppgaver */
+  clearCompleted(): void {
+    this.tasks = this.tasks.filter((t) => !t.done);
     this.persist();
   }
 
+  // ----------------------------------------
+  // 🟩 UI og visningslogikk
+  // ----------------------------------------
   toggleForm(): void {
     this.showForm = !this.showForm;
   }
 
   toggleShowAll(type: 'active' | 'completed'): void {
-    if (type === 'active') {
-      this.showAllActive = !this.showAllActive;
-    } else {
-      this.showAllCompleted = !this.showAllCompleted;
-    }
+    if (type === 'active') this.showAllActive = !this.showAllActive;
+    else this.showAllCompleted = !this.showAllCompleted;
   }
 
   get anyDone(): boolean {
@@ -143,7 +135,7 @@ export class Todo {
   }
 
   get visible(): Task[] {
-    let list = [...this.tasks];
+    const list = [...this.tasks];
     if (this.sortBy === 'date') {
       list.sort((a, b) => (a.dueDate || '').localeCompare(b.dueDate || ''));
     } else if (this.sortBy === 'name') {
@@ -166,7 +158,27 @@ export class Todo {
     return t.id;
   }
 
+  // ----------------------------------------
+  // 🟩 Persistens og tilbakestilling
+  // ----------------------------------------
   private persist(): void {
     this.store.set(this.tasks);
+  }
+
+  private resetFields(): void {
+    this.newTask =
+      this.newStartDate =
+      this.newDueDate =
+      this.newDueTime =
+      this.newEndTime =
+      this.newCategory =
+      this.customCategory =
+      this.newNote =
+      this.newPriority =
+      this.newRepeat =
+      this.newLink =
+      this.newColor =
+      this.newProject =
+        '';
   }
 }

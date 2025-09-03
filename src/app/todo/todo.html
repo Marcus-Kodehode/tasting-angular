@@ -1,21 +1,24 @@
 <!-- Fil: src/app/todo/todo.html -->
+
 <div class="max-w-4xl mx-auto card card-fixed animate-fade-in">
-  <!-- Topp: tittel + språkvelger -->
+  <!-- Topp: Tittel og språkvelger -->
   <div class="flex flex-col justify-between gap-4 mb-6 sm:flex-row sm:items-center">
     <h2 class="text-2xl font-bold text-green-300">📝 {{ 'TODO.TITLE' | translate }}</h2>
 
-    <!-- Språkvelger -->
-    <select
-      [value]="lang"
-      (change)="changeLang($any($event.target).value)"
-      class="px-2 py-1 text-white rounded bg-slate-800"
-    >
-      <option *ngFor="let lang of supportedLanguages" [value]="lang.code">
-        🌍 {{ 'LANG.' + lang.code | translate }}
-      </option>
-    </select>
+    <!-- Språkvelger med flagg -->
+    <div class="flex gap-2">
+      <img
+        *ngFor="let langObj of supportedLanguages"
+        [src]="'/assets/images/icons/' + langObj.code + '.png'"
+        [alt]="langObj.label"
+        class="w-6 h-6 transition-transform rounded cursor-pointer hover:scale-110"
+        (click)="changeLang(langObj.code)"
+        [class.opacity-40]="langObj.code !== lang"
+      />
+    </div>
   </div>
 
+  <!-- Sortering og form toggle -->
   <div class="flex justify-end gap-3 mb-4">
     <label class="text-white">{{ 'TODO.SORT_BY' | translate }}</label>
     <select [(ngModel)]="sortBy" class="px-2 py-1 text-white rounded bg-slate-800">
@@ -28,6 +31,7 @@
     </button>
   </div>
 
+  <!-- Ny oppgave skjema -->
   <form *ngIf="showForm" (ngSubmit)="addTask()" class="mb-6 space-y-4">
     <div>
       <label class="block text-xs text-white/60">{{ 'TODO.LABEL_TASK' | translate }}</label>
@@ -92,6 +96,7 @@
     </button>
   </form>
 
+  <!-- Aktive og fullførte oppgaver -->
   <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
     <div>
       <h3 class="mb-2 text-lg font-semibold text-green-300">
