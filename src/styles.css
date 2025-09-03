@@ -1,11 +1,14 @@
-/* Fil: src/styles.css
-   Beholder fargestil. Ryddige, gjenbrukbare utilities. */
+/* File: src/styles.css
+   Behold fargene, fjern scroll-lock, og bruk rene komponentklasser. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------------------------------------------------
+   UTILITIES – samlede, rene hjelpeklasser
+   ------------------------------------------------------------------ */
 @layer utilities {
-  /* Anim – respekter redusert bevegelse */
+  /* ---------------- Animations (respekterer redusert bevegelse) --- */
   .animate-fade-in {
     animation: fadeIn 0.9s ease-out both;
   }
@@ -21,38 +24,38 @@
     }
     100% {
       opacity: 1;
-      transform: none;
+      transform: translateY(0);
     }
   }
 
-  /* Diskré grønn glød */
+  /* ---------------- Small visual helpers ------------------------- */
   .glow {
     @apply drop-shadow-xl;
     box-shadow: 0 0 15px rgba(52, 211, 153, 0.55);
   }
 
-  /* Kort (glass) */
+  /* Kort (glassmorphism) */
   .card {
     @apply p-6 text-white border shadow-2xl rounded-2xl border-white/20 bg-white/10;
     backdrop-filter: blur(8px);
   }
 
-  /* Stabil minimumshøyde for kortet (hindrer hopp ved språkbytte) */
+  /* Fast min-høyde for todo-kort – stabil ved språkbytte */
   .card-fixed {
     min-height: 520px;
-  }
+  } /* mobil */
   @media (min-width: 640px) {
     .card-fixed {
       min-height: 560px;
     }
-  }
+  } /* sm */
   @media (min-width: 1024px) {
     .card-fixed {
       min-height: 600px;
     }
-  }
+  } /* lg */
 
-  /* Knapper */
+  /* ---------------- Buttons -------------------------------------- */
   .btn {
     @apply inline-flex items-center justify-center px-5 py-2 font-semibold transition-all duration-200 rounded-full;
   }
@@ -62,17 +65,31 @@
   .btn:disabled {
     @apply cursor-not-allowed opacity-60;
   }
+
   .btn-primary {
     @apply text-white bg-green-400 hover:bg-green-300 active:scale-[0.98];
   }
   .btn-danger {
     @apply text-white bg-red-500   hover:bg-red-400   active:scale-[0.98];
   }
-  .btn-fixed {
-    @apply px-4 h-11;
-  } /* lås høyde */
 
-  /* Inputs */
+  /* Ens høyde for knapper (hindrer “hopp” ved lengre tekst) */
+  .btn-fixed {
+    @apply h-11;
+  }
+  /* Litt mer kompakt – fin på mobil i task-actions */
+  .btn-compact {
+    @apply px-3 py-2;
+  }
+
+  /* “Link-knapp” (Skjul/Vis skjema) – aldri wrap */
+  .btn-link {
+    @apply inline-flex items-center px-2 py-1 text-xs font-semibold rounded whitespace-nowrap;
+    @apply text-green-300 hover:underline hover:text-green-200;
+    background: transparent;
+  }
+
+  /* ---------------- Inputs / select / textarea ------------------- */
   .input {
     @apply w-full px-3 py-2 text-white transition-colors duration-200 border rounded border-white/40 bg-white/20;
   }
@@ -85,9 +102,13 @@
   .input:disabled {
     @apply cursor-not-allowed opacity-60;
   }
+
+  /* Lås felt-høyde for alle single-line inputs/selects */
   .field-h {
     @apply h-11;
-  } /* samme høyde som knapper */
+  }
+
+  /* Select: ikke wrap i visning, men ellipsis */
   .select-nowrap {
     white-space: nowrap;
     overflow: hidden;
@@ -102,24 +123,53 @@
     background-color: #1f2937;
     color: #fff;
   } /* gray-800 */
+
+  /* Tekstfelt høyde låst – hindrer “pulsering” */
   .textarea-fixed {
     min-height: 96px;
     max-height: 160px;
   }
 
-  /* Grid til skjema */
+  /* ---------------- Forms / grid --------------------------------- */
+  .form-label {
+    @apply mb-1 text-xs tracking-wide uppercase text-white/60;
+  }
+
+  /* Stabil 12-kol grid som vi bruker på skjemaet */
   .form-grid {
     @apply grid gap-4;
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 
-  /* Små komponenter */
+  /* Kontrollrekke – pakk pent på små skjermer */
+  .control-row {
+    @apply flex flex-wrap items-center justify-end gap-2;
+  }
+
+  /* Mindre risk for clipping i select */
+  .minw-ctrl {
+    min-width: 8rem;
+  } /* ~128px */
+
+  /* Små “chips”/tags */
   .tag {
     @apply inline-flex items-center px-2 py-1 text-xs text-white rounded-full bg-white/30;
   }
-  .form-label {
-    @apply mb-1 text-xs tracking-wide uppercase text-white/60;
+
+  /* Link-chip (for lenke) – matcher tag, men med underline ved hover */
+  .chip-link {
+    @apply inline-flex items-center px-2 py-1 text-xs rounded-full bg-white/20;
   }
+  .chip-link:hover {
+    @apply underline;
+  }
+
+  /* Notat-boks – mjuk plate bakgrunn */
+  .note-box {
+    @apply p-2 mt-2 text-sm rounded bg-white/10;
+  }
+
+  /* Skjermleser-hjelp */
   .sr-only {
     position: absolute;
     width: 1px;
@@ -132,87 +182,119 @@
     border: 0;
   }
 
-  /* Kontrollrekke (sortering etc.) */
-  .control-row {
-    @apply flex flex-wrap items-center justify-end gap-2;
+  /* --- Global språkvelger: horisontal, sentrert, uten fixed posisjon --- */
+  .lang-switch {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* midtstilt */
+    align-items: center;
+    gap: 0.5rem;
+    margin: 12px auto; /* plasseres over kortet */
+    padding: 4px 8px;
+    border-radius: 9999px;
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
   }
-  .btn-link {
-    @apply inline-flex items-center px-2 py-1 text-xs font-semibold text-green-300 rounded hover:text-green-200 hover:underline whitespace-nowrap;
-    background: transparent;
-  }
-  .minw-ctrl {
-    min-width: 8rem;
-  } /* ~128px */
 
-  /* Språkvelger inline (ikke fixed) */
-  .lang-inline {
-    @apply inline-flex items-center gap-2 px-3 py-1 mx-auto mt-3 border rounded-full shadow-lg bg-white/10 backdrop-blur border-white/20;
-  }
   .lang-flag {
-    @apply w-6 h-6 transition-transform rounded cursor-pointer;
+    width: 24px;
+    height: 24px;
+    display: block;
+    border-radius: 6px;
+    transition: transform 0.15s ease;
+    cursor: pointer;
   }
   .lang-flag:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
   }
   .lang-flag.inactive {
-    @apply opacity-40;
-  }
-  .lang-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .lang-scroll::-webkit-scrollbar {
-    display: none;
-  }
-  @layer utilities {
-    /* Kort-linje til venstre som kodes etter prioritet */
-    .task {
-      @apply p-3 border rounded bg-white/5 border-white/10;
-    }
-    .task:hover {
-      @apply bg-white/10;
-    }
-
-    .prio-low {
-      @apply border-l-4 border-green-400;
-    }
-    .prio-mid {
-      @apply border-l-4 border-yellow-400;
-    }
-    .prio-high {
-      @apply border-l-4 border-red-500;
-    }
-
-    /* Chips-rad under tittelen */
-    .meta-row {
-      @apply flex flex-wrap items-center gap-2 mt-1 text-xs;
-    }
-
-    /* Lenke-chip */
-    .chip-link {
-      @apply inline-flex items-center gap-1 px-2 py-1 text-white rounded-full bg-white/20;
-    }
-    .chip-link:hover {
-      @apply bg-white/30;
-    }
-
-    /* Notatboks */
-    .note-box {
-      @apply p-2 mt-2 text-sm rounded bg-white/10 text-white/90;
-    }
-  }
-  /* Unngå “nested scroll” – la kun body scrolle */
-  html,
-  body {
-    min-height: 100%;
-    height: auto;
-    overflow-y: auto;
+    opacity: 0.45;
   }
 
-  /* Bruk denne klassen på hoved-wrapperen i app.html */
-  .app-page {
-    min-height: 100dvh;
-    overflow: visible;
+  /* sm+: flytt til øvre høyre og gi litt mer luft */
+  @media (min-width: 640px) {
+    .lang-switch {
+      left: auto;
+      transform: none;
+      right: max(12px, env(safe-area-inset-right));
+      top: max(12px, env(safe-area-inset-top));
+      @apply gap-2 px-3 py-1;
+    }
+    .lang-flag {
+      @apply w-6 h-6;
+    }
+  }
+
+  /* ---------------- Task cards (oppgaver) ------------------------ */
+  .task {
+    @apply p-3 border-l-4 rounded bg-white/5 border-white/10;
+  }
+
+  /* Prioritetsfarger i venstrekant */
+  .prio-high {
+    border-left-color: #ef4444;
+  } /* red-500 */
+  .prio-mid {
+    border-left-color: #f59e0b;
+  } /* amber-500 */
+  .prio-low {
+    border-left-color: #10b981;
+  } /* emerald-500 */
+
+  /* Grid for hvert oppgavekort:
+     - Mobil: head → meta → note → actions (under)
+     - sm+:   innhold venstre, actions høyre */
+  .task-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'head'
+      'meta'
+      'note'
+      'actions';
+    gap: 0.5rem;
+  }
+  @media (min-width: 640px) {
+    .task-grid {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        'head actions'
+        'meta actions'
+        'note actions';
+      align-items: start;
+      column-gap: 0.75rem;
+    }
+  }
+
+  .task-head {
+    grid-area: head;
+  }
+  .task-meta {
+    grid-area: meta;
+  }
+  .task-note {
+    grid-area: note;
+  }
+  .task-actions {
+    grid-area: actions;
+  }
+
+  /* Meta-rad:
+     - Mobil: to kolonner for å utnytte bredden
+     - sm+:   chips på rad */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+  @media (min-width: 640px) {
+    .meta-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
   }
 }
 
