@@ -1,0 +1,69 @@
+{
+  "APP": {
+    "ASK_NAME": "你叫什麼名字？",
+    "PLACEHOLDER_NAME": "輸入你的名字",
+    "CONTINUE": "🚀 繼續",
+    "GREETING": "嗨，{{name}} 👋",
+    "TAGLINE": "你的個人待辦清單，閃耀星塵中",
+    "FOOTER": "以 ❤️ 和 Tailwind 建構"
+  },
+
+  "TODO": {
+    "TITLE": "我的待辦清單",
+
+    "SORT_BY": "排序依據：",
+    "SORT_DATE": "日期",
+    "SORT_NAME": "名稱",
+    "SORT_CATEGORY": "分類",
+
+    "HIDE_FORM": "隱藏表單",
+    "SHOW_FORM": "顯示表單",
+
+    "LABEL_TASK": "要做什麼？",
+    "PLACEHOLDER_TASK": "輸入任務…",
+
+    "LABEL_STARTDATE": "開始日期",
+    "LABEL_DUEDATE": "截止日期",
+    "LABEL_DUETIME": "開始時間",
+    "LABEL_ENDTIME": "結束時間",
+
+    "LABEL_CATEGORY": "分類",
+    "OPT_CATEGORY": "選擇分類",
+    "OPT_CATEGORY_CUSTOM": "自訂…",
+
+    "LABEL_PRIORITY": "優先順序",
+    "OPT_PRIORITY": "選擇優先順序",
+
+    "LABEL_REPEAT": "重複",
+    "OPT_REPEAT": "選擇重複",
+
+    "LABEL_LINK": "連結（可選）",
+    "PLACEHOLDER_LINK": "https:// …",
+
+    "LABEL_PROJECT": "專案",
+    "PLACEHOLDER_PROJECT": "專案名稱",
+
+    "LABEL_NOTE": "備註 / 描述",
+    "PLACEHOLDER_NOTE": "簡短描述…",
+
+    "ADD_BUTTON": "➕ 新增",
+    "REMOVE": "❌ 刪除",
+    "MARK_DONE": "✅ 完成",
+    "MARK_ACTIVE": "↩️ 重新啟用",
+    "MARK_ALL_DONE": "✅ 完成所有任務",
+
+    "ACTIVE_TITLE": "進行中",
+    "COMPLETED_TITLE": "已完成",
+    "SHOW_MORE": "顯示更多",
+    "SHOW_LESS": "顯示更少"
+  },
+
+  "LANG": {
+    "nb": "挪威文",
+    "en": "英文",
+    "es-MX": "西班牙文（墨西哥）",
+    "tr": "土耳其文",
+    "sw": "斯瓦西里文",
+    "zh-Hant": "繁體中文"
+  }
+}

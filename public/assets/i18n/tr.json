@@ -1,0 +1,69 @@
+{
+  "APP": {
+    "ASK_NAME": "Adın ne?",
+    "PLACEHOLDER_NAME": "Adını gir",
+    "CONTINUE": "🚀 Devam et",
+    "GREETING": "Merhaba, {{name}} 👋",
+    "TAGLINE": "Kişisel yapılacaklar listen, yıldız tozunda",
+    "FOOTER": "❤️ ve Tailwind ile oluşturuldu"
+  },
+
+  "TODO": {
+    "TITLE": "Yapılacaklar Listem",
+
+    "SORT_BY": "Sırala:",
+    "SORT_DATE": "Tarih",
+    "SORT_NAME": "İsim",
+    "SORT_CATEGORY": "Kategori",
+
+    "HIDE_FORM": "Formu gizle",
+    "SHOW_FORM": "Formu göster",
+
+    "LABEL_TASK": "Ne yapılacak?",
+    "PLACEHOLDER_TASK": "Görevi yaz…",
+
+    "LABEL_STARTDATE": "Başlangıç tarihi",
+    "LABEL_DUEDATE": "Bitiş tarihi",
+    "LABEL_DUETIME": "Başlangıç saati",
+    "LABEL_ENDTIME": "Bitiş saati",
+
+    "LABEL_CATEGORY": "Kategori",
+    "OPT_CATEGORY": "Kategori seç",
+    "OPT_CATEGORY_CUSTOM": "Özel…",
+
+    "LABEL_PRIORITY": "Öncelik",
+    "OPT_PRIORITY": "Öncelik seç",
+
+    "LABEL_REPEAT": "Tekrar",
+    "OPT_REPEAT": "Tekrar seç",
+
+    "LABEL_LINK": "Bağlantı (isteğe bağlı)",
+    "PLACEHOLDER_LINK": "https:// …",
+
+    "LABEL_PROJECT": "Proje",
+    "PLACEHOLDER_PROJECT": "Proje adı",
+
+    "LABEL_NOTE": "Not / açıklama",
+    "PLACEHOLDER_NOTE": "Kısa açıklama…",
+
+    "ADD_BUTTON": "➕ Ekle",
+    "REMOVE": "❌ Sil",
+    "MARK_DONE": "✅ Tamamlandı",
+    "MARK_ACTIVE": "↩️ Yeniden etkinleştir",
+    "MARK_ALL_DONE": "✅ Tüm görevleri tamamla",
+
+    "ACTIVE_TITLE": "Aktif",
+    "COMPLETED_TITLE": "Tamamlananlar",
+    "SHOW_MORE": "Daha fazla göster",
+    "SHOW_LESS": "Daha az göster"
+  },
+
+  "LANG": {
+    "nb": "Norveççe",
+    "en": "İngilizce",
+    "es-MX": "İspanyolca (Meksika)",
+    "tr": "Türkçe",
+    "sw": "Svahili",
+    "zh-Hant": "Geleneksel Çince"
+  }
+}
