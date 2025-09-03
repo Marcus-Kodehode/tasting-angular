@@ -2,14 +2,17 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgForOf, NgStyle, NgClass, SlicePipe } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 import { TodoStore, Task } from './todo.store';
+import { SUPPORTED_LANGUAGES } from '../i18n';
 
 type Filter = 'all' | 'active' | 'done';
 
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [FormsModule, NgIf, NgForOf, NgStyle, NgClass, SlicePipe],
+  imports: [FormsModule, NgIf, NgForOf, NgStyle, NgClass, SlicePipe, TranslateModule],
   templateUrl: './todo.html',
   styleUrl: './todo.css',
 })
@@ -42,8 +45,22 @@ export class Todo {
   showAllActive = false;
   showAllCompleted = false;
 
-  constructor(private store: TodoStore) {
+  // Språk
+  supportedLanguages = SUPPORTED_LANGUAGES;
+  lang: string;
+
+  constructor(private store: TodoStore, private translate: TranslateService) {
     this.tasks = this.store.get();
+
+    // Sett standard språk
+    this.translate.setDefaultLang('nb');
+    this.translate.use('nb');
+    this.lang = 'nb';
+  }
+
+  changeLang(lang: string): void {
+    this.lang = lang;
+    this.translate.use(lang);
   }
 
   addTask(): void {
@@ -69,7 +86,11 @@ export class Todo {
       project: this.newProject,
     });
 
-    // Reset feltene
+    this.resetFields();
+    this.persist();
+  }
+
+  resetFields(): void {
     this.newTask =
       this.newStartDate =
       this.newDueDate =
@@ -84,8 +105,6 @@ export class Todo {
       this.newColor =
       this.newProject =
         '';
-
-    this.persist();
   }
 
   toggle(task: Task): void {

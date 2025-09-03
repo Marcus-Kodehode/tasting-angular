@@ -4,25 +4,34 @@
 // Her bootes rot-komponenten (App) med global konfig (appConfig),
 // og globale styles lastes inn (Tailwind m.m.).
 
-import { bootstrapApplication } from '@angular/platform-browser';
-// bootstrapApplication starter en standalone Angular-app i browseren
-// uten å bruke tradisjonell NgModule.
+// Fil: src/main.ts
 
-import { appConfig } from './app/app.config';
-// Global konfig for appen (providers). Her har du bl.a.
-// provideBrowserGlobalErrorListeners() og provideZoneChangeDetection().
+// Fil: src/main.ts
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideHttpClient } from '@angular/common/http';
 
 import { App } from './app/app';
-// Rot-komponenten som renderes inn i <app-root> i index.html.
+import { appConfig } from './app/app.config';
+
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import './styles.css';
-// Globale CSS (inkl. Tailwind). Import her sikrer at byggeverktøyet
-// plukker opp og prosesserer CSS før appen bootstrappes.
 
-// Start appen: Render <App> inn i <app-root> i index.html med gitt konfig.
-// Funksjonen returnerer en Promise; ev. feil fanges i .catch().
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+bootstrapApplication(App, {
+  providers: [
+    provideHttpClient(),
+    provideTranslateService({
+      lang: 'nb',
+      fallbackLang: 'nb',
+      loader: provideTranslateHttpLoader({
+        prefix: './assets/i18n/',
+        suffix: '.json',
+      }),
+    }),
+    ...appConfig.providers,
+  ],
+}).catch((err) => console.error(err));
 
 /* -------------------------------------------------------
  SAMMENDRAG

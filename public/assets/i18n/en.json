@@ -1,0 +1,61 @@
+{
+  "TODO": {
+    "TITLE": "My Todo List",
+    "SORT_LABEL": "Sort by:",
+    "SORT_DATE": "Date",
+    "SORT_NAME": "Name",
+    "SORT_CATEGORY": "Category",
+    "HIDE_FORM": "Hide form",
+    "SHOW_FORM": "Show form",
+
+    "LABEL_TASK": "What needs to be done?",
+    "PLACEHOLDER_TASK": "Enter the task…",
+
+    "LABEL_STARTDATE": "Start date",
+    "LABEL_DUEDATE": "Due date",
+    "LABEL_DUETIME": "Start time",
+    "LABEL_ENDTIME": "End time",
+
+    "LABEL_CATEGORY": "Category",
+    "OPT_CATEGORY": "Choose category",
+    "OPT_CATEGORY_CUSTOM": "Custom…",
+
+    "LABEL_PRIORITY": "Priority",
+    "OPT_PRIORITY": "Choose priority",
+
+    "LABEL_REPEAT": "Repeat",
+    "OPT_REPEAT": "Choose repeat",
+
+    "LABEL_LINK": "Link (optional)",
+    "LABEL_PROJECT": "Project",
+    "LABEL_NOTE": "Note / description",
+
+    "ADD": "➕ Add",
+    "REMOVE": "❌ Remove",
+    "MARK_DONE": "✅ Done",
+    "MARK_ACTIVE": "↩️ Reactivate",
+    "MARK_ALL_DONE": "✅ Complete all tasks",
+
+    "ACTIVE_TITLE": "Active",
+    "COMPLETED_TITLE": "Completed",
+    "SHOW_MORE": "Show more",
+    "SHOW_LESS": "Show less",
+
+    "DONE_LABEL": "Completed",
+    "CATEGORY": "Category",
+    "PRIORITY": "Priority",
+    "REPEAT": "Repeat",
+    "PROJECT": "Project",
+    "LINK": "Link",
+    "NOTE": "📝"
+  },
+
+  "LANG": {
+    "nb": "Norwegian",
+    "en": "English",
+    "es-MX": "Spanish (Mexico)",
+    "tr": "Turkish",
+    "sw": "Swahili",
+    "zh-Hant": "Traditional Chinese"
+  }
+}

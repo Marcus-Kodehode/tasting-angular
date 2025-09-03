@@ -1,0 +1,61 @@
+{
+  "TODO": {
+    "TITLE": "Min Todo-liste",
+    "SORT_LABEL": "Sorter etter:",
+    "SORT_DATE": "Dato",
+    "SORT_NAME": "Navn",
+    "SORT_CATEGORY": "Kategori",
+    "HIDE_FORM": "Skjul skjema",
+    "SHOW_FORM": "Vis skjema",
+
+    "LABEL_TASK": "Hva skal gjøres?",
+    "PLACEHOLDER_TASK": "Skriv oppgaven…",
+
+    "LABEL_STARTDATE": "Startdato",
+    "LABEL_DUEDATE": "Forfallsdato",
+    "LABEL_DUETIME": "Starttid",
+    "LABEL_ENDTIME": "Sluttid",
+
+    "LABEL_CATEGORY": "Kategori",
+    "OPT_CATEGORY": "Velg kategori",
+    "OPT_CATEGORY_CUSTOM": "Egendefinert…",
+
+    "LABEL_PRIORITY": "Prioritet",
+    "OPT_PRIORITY": "Velg prioritet",
+
+    "LABEL_REPEAT": "Gjentakelse",
+    "OPT_REPEAT": "Velg gjentakelse",
+
+    "LABEL_LINK": "Lenke (valgfritt)",
+    "LABEL_PROJECT": "Prosjekt",
+    "LABEL_NOTE": "Notat / beskrivelse",
+
+    "ADD": "➕ Legg til",
+    "REMOVE": "❌ Fjern",
+    "MARK_DONE": "✅ Ferdig",
+    "MARK_ACTIVE": "↩️ Aktiver",
+    "MARK_ALL_DONE": "✅ Fullfør alle oppgaver",
+
+    "ACTIVE_TITLE": "Aktive",
+    "COMPLETED_TITLE": "Ferdige",
+    "SHOW_MORE": "Vis mer",
+    "SHOW_LESS": "Vis færre",
+
+    "DONE_LABEL": "Ferdig",
+    "CATEGORY": "Kategori",
+    "PRIORITY": "Prioritet",
+    "REPEAT": "Gjentakelse",
+    "PROJECT": "Prosjekt",
+    "LINK": "Lenke",
+    "NOTE": "📝"
+  },
+
+  "LANG": {
+    "nb": "Norsk",
+    "en": "Engelsk",
+    "es-MX": "Spansk (Mexico)",
+    "tr": "Tyrkisk",
+    "sw": "Swahili",
+    "zh-Hant": "Tradisjonell kinesisk"
+  }
+}
