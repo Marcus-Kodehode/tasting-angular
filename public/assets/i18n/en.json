@@ -1,15 +1,26 @@
 {
+  "APP": {
+    "ASK_NAME": "What's your name?",
+    "PLACEHOLDER_NAME": "Enter your name",
+    "CONTINUE": "🚀 Continue",
+    "GREETING": "Hi, {{name}} 👋",
+    "TAGLINE": "Your personal to-do list in stardust",
+    "FOOTER": "Built with ❤️ and Tailwind"
+  },
+
   "TODO": {
     "TITLE": "My Todo List",
-    "SORT_LABEL": "Sort by:",
+
+    "SORT_BY": "Sort by:",
     "SORT_DATE": "Date",
     "SORT_NAME": "Name",
     "SORT_CATEGORY": "Category",
+
     "HIDE_FORM": "Hide form",
     "SHOW_FORM": "Show form",
 
     "LABEL_TASK": "What needs to be done?",
-    "PLACEHOLDER_TASK": "Enter the task…",
+    "PLACEHOLDER_TASK": "Type your task…",
 
     "LABEL_STARTDATE": "Start date",
     "LABEL_DUEDATE": "Due date",
@@ -27,10 +38,15 @@
     "OPT_REPEAT": "Choose repeat",
 
     "LABEL_LINK": "Link (optional)",
-    "LABEL_PROJECT": "Project",
-    "LABEL_NOTE": "Note / description",
+    "PLACEHOLDER_LINK": "https:// …",
 
-    "ADD": "➕ Add",
+    "LABEL_PROJECT": "Project",
+    "PLACEHOLDER_PROJECT": "Project name",
+
+    "LABEL_NOTE": "Note / description",
+    "PLACEHOLDER_NOTE": "Short description …",
+
+    "ADD_BUTTON": "➕ Add",
     "REMOVE": "❌ Remove",
     "MARK_DONE": "✅ Done",
     "MARK_ACTIVE": "↩️ Reactivate",
@@ -39,15 +55,7 @@
     "ACTIVE_TITLE": "Active",
     "COMPLETED_TITLE": "Completed",
     "SHOW_MORE": "Show more",
-    "SHOW_LESS": "Show less",
-
-    "DONE_LABEL": "Completed",
-    "CATEGORY": "Category",
-    "PRIORITY": "Priority",
-    "REPEAT": "Repeat",
-    "PROJECT": "Project",
-    "LINK": "Link",
-    "NOTE": "📝"
+    "SHOW_LESS": "Show less"
   },
 
   "LANG": {

@@ -1,20 +1,30 @@
 <!-- Fil: src/app/app.html -->
 <body class="relative min-h-screen overflow-x-hidden bg-slate-900">
   <!-- Glow bakgrunn -->
-  <div class="absolute -inset-10 bg-gradient-to-tr from-cyan-500 via-teal-500 to-blue-500 blur-3xl opacity-40"></div>
-  <div class="absolute left-0 inset-y-1/4 w-80 h-80 bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 blur-2xl opacity-30"></div>
+  <div
+    class="absolute -inset-10 bg-gradient-to-tr from-cyan-500 via-teal-500 to-blue-500 blur-3xl opacity-40"
+  ></div>
+  <div
+    class="absolute left-0 inset-y-1/4 w-80 h-80 bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 blur-2xl opacity-30"
+  ></div>
 
   <div class="relative z-10 flex flex-col items-center justify-center min-h-screen p-6 font-sans">
     <ng-container *ngIf="!hasName; else content">
       <div class="flex items-center justify-center w-full h-full">
         <div class="w-full max-w-md space-y-4 text-center card animate-fade-in">
-          <!-- Logo på forsiden -->
           <img src="assets/images/ToDo-logo.png" alt="App logo" class="w-24 h-auto mx-auto mb-4" />
 
-          <h1 class="text-3xl font-bold text-green-300">Hva heter du?</h1>
-          <p class="text-sm text-white/70">Skriv inn navnet ditt for å komme i gang ✨</p>
-          <input [(ngModel)]="tempName" placeholder="Fyll inn navnet ditt" class="w-full input" />
-          <button (click)="saveName()" class="w-full btn btn-primary">🚀 Fortsett</button>
+          <h1 class="text-3xl font-bold text-green-300">{{ 'APP.ASK_NAME' | translate }}</h1>
+          <p class="text-sm text-white/70">{{ 'APP.TAGLINE' | translate }}</p>
+
+          <input
+            [(ngModel)]="tempName"
+            class="w-full input"
+            [placeholder]="'APP.PLACEHOLDER_NAME' | translate"
+          />
+          <button (click)="saveName()" class="w-full btn btn-primary">
+            {{ 'APP.CONTINUE' | translate }}
+          </button>
         </div>
       </div>
     </ng-container>
@@ -26,22 +36,21 @@
 
       <ng-template #todo>
         <header class="mb-10 text-center animate-fade-in">
-          <!-- Logo over tittel på appen -->
           <img src="assets/images/ToDo-logo.png" alt="App logo" class="w-20 h-auto mx-auto mb-4" />
 
-          <h1 class="text-4xl font-bold text-green-300">Hei, {{ name }} 👋</h1>
-          <p class="mt-2 text-white/70">Din personlige Todo-liste i stjernestøvet</p>
+          <h1 class="text-4xl font-bold text-green-300">
+            {{ 'APP.GREETING' | translate : { name: name } }}
+          </h1>
+          <p class="mt-2 text-white/70">{{ 'APP.TAGLINE' | translate }}</p>
         </header>
 
         <app-todo></app-todo>
 
-        <footer class="mt-10 text-xs text-white/40">Bygget med ❤️ og Tailwind</footer>
+        <footer class="mt-10 text-xs text-white/40">{{ 'APP.FOOTER' | translate }}</footer>
       </ng-template>
     </ng-template>
   </div>
 </body>
-
-
 
 <!--
 SAMMENDRAG – hva denne templaten gjør

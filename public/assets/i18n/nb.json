@@ -1,10 +1,21 @@
 {
+  "APP": {
+    "ASK_NAME": "Hva heter du?",
+    "PLACEHOLDER_NAME": "Fyll inn navnet ditt",
+    "CONTINUE": "🚀 Fortsett",
+    "GREETING": "Hei, {{name}} 👋",
+    "TAGLINE": "Din personlige Todo-liste i stjernestøvet",
+    "FOOTER": "Bygget med ❤️ og Tailwind"
+  },
+
   "TODO": {
     "TITLE": "Min Todo-liste",
-    "SORT_LABEL": "Sorter etter:",
+
+    "SORT_BY": "Sorter etter:",
     "SORT_DATE": "Dato",
     "SORT_NAME": "Navn",
     "SORT_CATEGORY": "Kategori",
+
     "HIDE_FORM": "Skjul skjema",
     "SHOW_FORM": "Vis skjema",
 
@@ -27,10 +38,15 @@
     "OPT_REPEAT": "Velg gjentakelse",
 
     "LABEL_LINK": "Lenke (valgfritt)",
-    "LABEL_PROJECT": "Prosjekt",
-    "LABEL_NOTE": "Notat / beskrivelse",
+    "PLACEHOLDER_LINK": "https:// …",
 
-    "ADD": "➕ Legg til",
+    "LABEL_PROJECT": "Prosjekt",
+    "PLACEHOLDER_PROJECT": "Prosjektnavn",
+
+    "LABEL_NOTE": "Notat / beskrivelse",
+    "PLACEHOLDER_NOTE": "Kort beskrivelse …",
+
+    "ADD_BUTTON": "➕ Legg til",
     "REMOVE": "❌ Fjern",
     "MARK_DONE": "✅ Ferdig",
     "MARK_ACTIVE": "↩️ Aktiver",
@@ -39,15 +55,7 @@
     "ACTIVE_TITLE": "Aktive",
     "COMPLETED_TITLE": "Ferdige",
     "SHOW_MORE": "Vis mer",
-    "SHOW_LESS": "Vis færre",
-
-    "DONE_LABEL": "Ferdig",
-    "CATEGORY": "Kategori",
-    "PRIORITY": "Prioritet",
-    "REPEAT": "Gjentakelse",
-    "PROJECT": "Prosjekt",
-    "LINK": "Lenke",
-    "NOTE": "📝"
+    "SHOW_LESS": "Vis færre"
   },
 
   "LANG": {
