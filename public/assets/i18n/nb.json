@@ -51,12 +51,28 @@
     "MARK_DONE": "✅ Ferdig",
     "MARK_ACTIVE": "↩️ Aktiver",
     "MARK_ALL_DONE": "✅ Fullfør alle oppgaver",
-    "CLEAR_COMPLETED": "Fjern fullførte",
+    "CLEAR_COMPLETED": "🗑 Fjern fullførte",
 
     "ACTIVE_TITLE": "Aktive",
     "COMPLETED_TITLE": "Ferdige",
     "SHOW_MORE": "Vis mer",
-    "SHOW_LESS": "Vis færre"
+    "SHOW_LESS": "Vis færre",
+
+    "CAT_WORK": "Jobb",
+    "CAT_HOME": "Hjem",
+    "CAT_SCHOOL": "Skole",
+    "CAT_TRAINING": "Trening",
+    "CAT_HEALTH": "Helse",
+
+    "PRIO_LOW": "Lav",
+    "PRIO_MEDIUM": "Middels",
+    "PRIO_HIGH": "Høy",
+
+    "REP_DAILY": "Daglig",
+    "REP_WEEKLY": "Ukentlig",
+    "REP_BIWEEKLY": "Annenhver uke",
+
+    "LINK": "Lenke"
   },
 
   "LANG": {
