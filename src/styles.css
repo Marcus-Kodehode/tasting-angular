@@ -1,175 +1,322 @@
-/* File: src/styles.css
-   Behold fargene, fjern scroll-lock, og bruk rene komponentklasser. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ------------------------------------------------------------------
-   UTILITIES – samlede, rene hjelpeklasser
-   ------------------------------------------------------------------ */
+   ANGULAR-KOMPATIBLE COMPONENTS
+------------------------------------------------------------------- */
+@layer components {
+  /* Premium Glass Card */
+  .card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Button System */
+  .btn {
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+    box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  .btn-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+  }
+
+  .btn-danger:hover {
+    background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  .btn-icon {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+
+  .btn-icon:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px) scale(1.05);
+  }
+
+  /* Enhanced Inputs */
+  .input {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .input:focus {
+    border-color: rgba(16, 185, 129, 0.5);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  }
+
+  .input:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Select Styling */
+  select.input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 40px;
+    appearance: none;
+  }
+
+  select.input option {
+    background-color: #1f2937;
+    color: #ffffff;
+  }
+
+  /* Floating Labels */
+  .input-group {
+    position: relative;
+  }
+
+  .floating-label {
+    position: absolute;
+    left: 16px;
+    top: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    transform-origin: left top;
+  }
+
+  .input-group .input:focus + .floating-label,
+  .input-group .input:not(:placeholder-shown) + .floating-label {
+    transform: translateY(-24px) scale(0.75);
+    color: #10b981;
+  }
+
+  /* Task Cards */
+  .task {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .task:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .task.prio-low {
+    border-left: 4px solid #10b981;
+  }
+
+  .task.prio-mid {
+    border-left: 4px solid #f59e0b;
+  }
+
+  .task.prio-high {
+    border-left: 4px solid #ef4444;
+  }
+
+  /* Language Switcher */
+  .lang-switch {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .lang-flag {
+    transition: all 0.3s ease;
+    filter: brightness(1.1);
+  }
+
+  .lang-flag:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .lang-flag.inactive {
+    opacity: 0.5;
+    filter: brightness(0.7);
+  }
+
+  /* Form Section */
+  .form-section {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Stats Badge */
+  .stat-badge {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    backdrop-filter: blur(10px);
+  }
+
+  /* Form Labels */
+  .form-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    letter-spacing: 0.025em;
+  }
+}
+
+/* ------------------------------------------------------------------
+   UTILITIES & ANIMATIONS
+------------------------------------------------------------------- */
 @layer utilities {
-  /* ---------------- Animations (respekterer redusert bevegelse) --- */
-  .animate-fade-in {
-    animation: fadeIn 0.9s ease-out both;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .animate-fade-in {
-      animation: none;
-    }
-  }
+  /* Keyframe Animations */
   @keyframes fadeIn {
-    0% {
+    from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(20px) scale(0.95);
     }
-    100% {
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
       opacity: 1;
       transform: translateY(0);
     }
   }
 
-  /* ---------------- Small visual helpers ------------------------- */
-  .glow {
-    @apply drop-shadow-xl;
-    box-shadow: 0 0 15px rgba(52, 211, 153, 0.55);
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
-  /* Kort (glassmorphism) */
+  @keyframes glow {
+    0%,
+    100% {
+      filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.3));
+    }
+    50% {
+      filter: drop-shadow(0 0 40px rgba(16, 185, 129, 0.6));
+    }
+  }
+
+  /* Animation Classes */
+  .animate-fade-in {
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-slide-up,
+    .animate-scale-in,
+    .animate-glow {
+      animation: none;
+    }
+  }
+
+  /* Glass Effect */
+  .glass {
+    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Custom Gradient Background */
+  .gradient-mesh {
+    background: radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+  }
+
+  /* Layout System */
+  html,
+  body {
+    height: auto;
+    overflow-x: hidden;
+  }
+
+  body {
+    overflow-y: auto;
+  }
+
+  .page-shell {
+    min-height: 100svh;
+    overflow: hidden;
+  }
+
+  .main-wrap {
+    min-height: inherit;
+    overflow: visible;
+  }
+
   .card {
-    @apply p-6 text-white border shadow-2xl rounded-2xl border-white/20 bg-white/10;
-    backdrop-filter: blur(8px);
+    overflow: visible;
+    max-height: none;
   }
 
-  /* Fast min-høyde for todo-kort – stabil ved språkbytte */
-  .card-fixed {
-    min-height: 520px;
-  } /* mobil */
-  @media (min-width: 640px) {
-    .card-fixed {
-      min-height: 560px;
-    }
-  } /* sm */
-  @media (min-width: 1024px) {
-    .card-fixed {
-      min-height: 600px;
-    }
-  } /* lg */
-
-  /* ---------------- Buttons -------------------------------------- */
-  .btn {
-    @apply inline-flex items-center justify-center px-5 py-2 font-semibold transition-all duration-200 rounded-full;
-  }
-  .btn:focus-visible {
-    @apply outline-none ring-2 ring-offset-2 ring-offset-black/30 ring-green-300;
-  }
-  .btn:disabled {
-    @apply cursor-not-allowed opacity-60;
+  /* Custom Scrollbar */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
   }
 
-  .btn-primary {
-    @apply text-white bg-green-400 hover:bg-green-300 active:scale-[0.98];
-  }
-  .btn-danger {
-    @apply text-white bg-red-500   hover:bg-red-400   active:scale-[0.98];
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
   }
 
-  /* Ens høyde for knapper (hindrer “hopp” ved lengre tekst) */
-  .btn-fixed {
-    @apply h-11;
-  }
-  /* Litt mer kompakt – fin på mobil i task-actions */
-  .btn-compact {
-    @apply px-3 py-2;
-  }
-
-  /* “Link-knapp” (Skjul/Vis skjema) – aldri wrap */
-  .btn-link {
-    @apply inline-flex items-center px-2 py-1 text-xs font-semibold rounded whitespace-nowrap;
-    @apply text-green-300 hover:underline hover:text-green-200;
+  .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
   }
 
-  /* ---------------- Inputs / select / textarea ------------------- */
-  .input {
-    @apply w-full px-3 py-2 text-white transition-colors duration-200 border rounded border-white/40 bg-white/20;
-  }
-  .input::placeholder {
-    @apply text-white/60;
-  }
-  .input:focus-visible {
-    @apply outline-none ring-2 ring-green-300;
-  }
-  .input:disabled {
-    @apply cursor-not-allowed opacity-60;
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
   }
 
-  /* Lås felt-høyde for alle single-line inputs/selects */
-  .field-h {
-    @apply h-11;
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
   }
 
-  /* Select: ikke wrap i visning, men ellipsis */
-  .select-nowrap {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  select.input {
-    appearance: none;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-  }
-  select.input option {
-    background-color: #1f2937;
-    color: #fff;
-  } /* gray-800 */
-
-  /* Tekstfelt høyde låst – hindrer “pulsering” */
-  .textarea-fixed {
-    min-height: 96px;
-    max-height: 160px;
-  }
-
-  /* ---------------- Forms / grid --------------------------------- */
-  .form-label {
-    @apply mb-1 text-xs tracking-wide uppercase text-white/60;
-  }
-
-  /* Stabil 12-kol grid som vi bruker på skjemaet */
-  .form-grid {
-    @apply grid gap-4;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-
-  /* Kontrollrekke – pakk pent på små skjermer */
-  .control-row {
-    @apply flex flex-wrap items-center justify-end gap-2;
-  }
-
-  /* Mindre risk for clipping i select */
-  .minw-ctrl {
-    min-width: 8rem;
-  } /* ~128px */
-
-  /* Små “chips”/tags */
-  .tag {
-    @apply inline-flex items-center px-2 py-1 text-xs text-white rounded-full bg-white/30;
-  }
-
-  /* Link-chip (for lenke) – matcher tag, men med underline ved hover */
-  .chip-link {
-    @apply inline-flex items-center px-2 py-1 text-xs rounded-full bg-white/20;
-  }
-  .chip-link:hover {
-    @apply underline;
-  }
-
-  /* Notat-boks – mjuk plate bakgrunn */
-  .note-box {
-    @apply p-2 mt-2 text-sm rounded bg-white/10;
-  }
-
-  /* Skjermleser-hjelp */
+  /* Screen Reader Only */
   .sr-only {
     position: absolute;
     width: 1px;
@@ -181,152 +328,7 @@
     white-space: nowrap;
     border: 0;
   }
-
-  /* --- Global språkvelger: horisontal, sentrert, uten fixed posisjon --- */
-  .lang-switch {
-    display: flex;
-    flex-direction: row;
-    justify-content: center; /* midtstilt */
-    align-items: center;
-    gap: 0.5rem;
-    margin: 12px auto; /* plasseres over kortet */
-    padding: 4px 8px;
-    border-radius: 9999px;
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
-  }
-
-  .lang-flag {
-    width: 24px;
-    height: 24px;
-    display: block;
-    border-radius: 6px;
-    transition: transform 0.15s ease;
-    cursor: pointer;
-  }
-  .lang-flag:hover {
-    transform: scale(1.08);
-  }
-  .lang-flag.inactive {
-    opacity: 0.45;
-  }
-
-  /* sm+: flytt til øvre høyre og gi litt mer luft */
-  @media (min-width: 640px) {
-    .lang-switch {
-      left: auto;
-      transform: none;
-      right: max(12px, env(safe-area-inset-right));
-      top: max(12px, env(safe-area-inset-top));
-      @apply gap-2 px-3 py-1;
-    }
-    .lang-flag {
-      @apply w-6 h-6;
-    }
-  }
-
-  /* ---------------- Task cards (oppgaver) ------------------------ */
-  .task {
-    @apply p-3 border-l-4 rounded bg-white/5 border-white/10;
-  }
-
-  /* Prioritetsfarger i venstrekant */
-  .prio-high {
-    border-left-color: #ef4444;
-  } /* red-500 */
-  .prio-mid {
-    border-left-color: #f59e0b;
-  } /* amber-500 */
-  .prio-low {
-    border-left-color: #10b981;
-  } /* emerald-500 */
-
-  /* Grid for hvert oppgavekort:
-     - Mobil: head → meta → note → actions (under)
-     - sm+:   innhold venstre, actions høyre */
-  .task-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      'head'
-      'meta'
-      'note'
-      'actions';
-    gap: 0.5rem;
-  }
-  @media (min-width: 640px) {
-    .task-grid {
-      grid-template-columns: 1fr auto;
-      grid-template-areas:
-        'head actions'
-        'meta actions'
-        'note actions';
-      align-items: start;
-      column-gap: 0.75rem;
-    }
-  }
-
-  .task-head {
-    grid-area: head;
-  }
-  .task-meta {
-    grid-area: meta;
-  }
-  .task-note {
-    grid-area: note;
-  }
-  .task-actions {
-    grid-area: actions;
-  }
-
-  /* Meta-rad:
-     - Mobil: to kolonner for å utnytte bredden
-     - sm+:   chips på rad */
-  .meta-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.4rem;
-  }
-  @media (min-width: 640px) {
-    .meta-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-  }
-  /* ---------- One-scroller fix ---------- */
-  /* La kun vinduet scrolle */
-  html,
-  body {
-    height: auto;
-  }
-  body {
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
-  /* Ytre skall for hele appen – skjær av gløde-bakgrunn (hindrer intern scroll) */
-  .page-shell {
-    min-height: 100svh; /* mer stabil på mobil enn 100vh */
-    overflow: hidden; /* glow -inset-10 skal ikke lage egen scrollbar */
-  }
-
-  /* Hovedinnhold skal ikke ha egen scroll */
-  .main-wrap {
-    min-height: inherit;
-    overflow: visible;
-  }
-
-  /* Pass på at kortet ikke introduserer egen scroll */
-  .card,
-  .card-fixed {
-    overflow: visible;
-    max-height: none;
-  }
 }
-
 /* -------------------- Sammendrag --------------------
 - Fjernet global overflow:hidden (scroll fungerer igjen).
 - Beholder fargene dine; strammet .card/.btn/.input/.tag.
